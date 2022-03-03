@@ -21,6 +21,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'Doc_Ident',
+        'CPF',
+        'celular',
+        'fixo',
+        'whats_tele',
+        'endereco',
+        'numero',
+        'complemento',
+        'bairro',
+        'cidade',
+        'estado',
+        'cep',
+        'tipo',
     ];
 
     /**

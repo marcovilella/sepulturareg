@@ -29,8 +29,20 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'email' => [ 'string', 'email'],
+            'password' => ['required', 'string', 'min:6'],
+            'CPF' => [ 'required', 'string', 'min:14', 'users:unique' ],
+         ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatório',
+            'CPF.min' => 'O campo CPF está inválido',
+            'email' => 'O email precisa ser válido',
+            'cpf.unique' => 'CPF já cadastrado',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'O campo senha tem que ser no mínimo de 6 caracteres.',
         ];
     }
 
