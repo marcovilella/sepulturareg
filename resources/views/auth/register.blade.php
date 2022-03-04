@@ -26,8 +26,7 @@
             <div class="mt-4">
                 <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
 
-                <x-input id="Doc_Ident" class="block mt-1 w-full" type="text" name="Doc_Ident" :value="old('Doc_Ident')"
-                    required autofocus />
+                <x-input id="Doc_Ident" class="block mt-1 w-full" type="text" name="Doc_Ident" :value="old('Doc_Ident')" />
             </div>
 
             <!-- CPF -->
@@ -42,31 +41,30 @@
             <div class="mt-4">
                 <x-label for="celular" :value="__('Tel Celular')" />
 
-                <x-input id="celular" class="block mt-1 w-full" type="text" name="celular" :value="old('celular')"
-                    required />
+                <x-input oninput="mascara(this, 'celular')" id="celular" class="block mt-1 w-full" type="text"
+                    name="celular" :value="old('celular')" />
             </div>
 
             <!-- Whatsapp / Telegram -->
             <div class="mt-4">
                 <x-label for="whats_tele" :value="__('Whatsapp / Telegram (Opcional)')" />
 
-                <x-input id="whats_tele" class="block mt-1 w-full" type="text" name="whats_tele"
-                    :value="old('whats_tele')" required />
+                <x-input oninput="mascara(this, 'celular')" id="whats_tele" class="block mt-1 w-full" type="text" name="whats_tele"
+                    :value="old('whats_tele')" />
             </div>
 
             <!-- Telefone Fixo -->
             <div class="mt-4">
                 <x-label for="fixo" :value="__('Tel Fixo (Opcional)')" />
 
-                <x-input id="fixo" class="block mt-1 w-full" type="text" name="fixo" :value="old('fixo')" required />
+                <x-input id="fixo" class="block mt-1 w-full" type="text" name="fixo" :value="old('fixo')" />
             </div>
 
             <!-- Email -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                    required />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
             <!-- Password -->
@@ -89,35 +87,35 @@
             <div class="mt-4">
                 <x-label for="endereco" :value="__('Avenida / Rua / Outro')" />
 
-                <x-input id="endereco" class="block mt-1 w-full" type="text" name="endereco" required />
+                <x-input id="endereco" class="block mt-1 w-full" type="text" name="endereco" />
             </div>
 
             <!-- Número -->
             <div class="mt-4">
                 <x-label for="numero" :value="__('Número')" />
 
-                <x-input id="numero" class="block mt-1 w-full" type="number" min="0" name="numero" required />
+                <x-input id="numero" class="block mt-1 w-full" type="number" min="0" name="numero" />
             </div>
 
             <!-- Complemento -->
             <div class="mt-4">
                 <x-label for="complemento" :value="__('Complemento')" />
 
-                <x-input id="complemento" class="block mt-1 w-full" type="text" name="complemento" required />
+                <x-input id="complemento" class="block mt-1 w-full" type="text" name="complemento" />
             </div>
 
             <!-- Bairro -->
             <div class="mt-4">
                 <x-label for="bairro" :value="__('Bairro')" />
 
-                <x-input id="bairro" class="block mt-1 w-full" type="text" name="bairro" required />
+                <x-input id="bairro" class="block mt-1 w-full" type="text" name="bairro" />
             </div>
 
             <!-- Cidade -->
             <div class="mt-4">
                 <x-label for="cidade" :value="__('Cidade')" />
 
-                <x-input id="cidade" class="block mt-1 w-full" type="text" name="cidade" required />
+                <x-input id="cidade" class="block mt-1 w-full" type="text" name="cidade" />
             </div>
 
             <!-- Estado -->
@@ -126,7 +124,7 @@
 
                 <select id="estado"
                     class="block mt-1 w-full form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                    type="text" name="estado" required>
+                    type="text" name="estado">
                     <option value="" selected>Selecione</option>
                     <option value="MINAS GERAIS">MINAS GERAIS</option>
                 </select>
@@ -136,7 +134,7 @@
             <div class="mt-4">
                 <x-label for="cep" :value="__('CEP')" />
 
-                <x-input id="cep" class="block mt-1 w-full" type="text" name="cep" required />
+                <x-input oninput="mascara(this, 'cep')" id="cep" class="block mt-1 w-full" type="text" name="cep" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -169,5 +167,16 @@
             if (v.length == 3 || v.length == 7) i.value += ".";
             if (v.length == 11) i.value += "-";
         }
+
+        if (t == "celular") {
+            i.setAttribute("maxlength", "10");
+            if (v.length == 5) i.value += "-";
+        }
+
+        if (t == "cep") {
+            i.setAttribute("maxlength", "9");
+            if (v.length == 5) i.value += "-";
+        }
+
     }
 </script>

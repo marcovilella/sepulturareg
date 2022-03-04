@@ -4,6 +4,13 @@
     <div class="col-12">
         <div class="col-xl-5 p-5 my-5 bg-light mx-auto">
             <div class="mb-3">
+                <div class="">
+                    <a class="btn" data-bs-toggle="modal" data-bs-target="#imagemModal">
+                        <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/adicionar-imagem.png"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
+                            alt="...">
+                    </a>
+                </div>
                 <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente</label>
                 <input class="form-control" type="file" name="Doc_Ident_Frente" id="Doc_Ident_Frente">
             </div>
@@ -34,6 +41,20 @@
                     seja falecido, de acordo com o art.13 da Lei 1.871 de 21 de janeiro de 1.998</label>
                 <input class="form-control" type="file" id="formFile">
             </div>
+            <button type="submit" class="btn">teste </button>
         </div>
     </div>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="imagemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/adicionar-imagem.png"
+                    class="img-fluid" alt="...">
+            </div>
+        </div>
+    </div>
+</div>
