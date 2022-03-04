@@ -34,7 +34,7 @@
                 <x-label for="CPF" :value="__('CPF')" />
 
                 <x-input oninput="mascara(this, 'cpf')" id="CPF" class="block mt-1 w-full" type="text" name="CPF"
-                    :value="old('CPF')" required />
+                    :value="old('CPF')" />
             </div>
 
             <!-- Telefone Celular -->
