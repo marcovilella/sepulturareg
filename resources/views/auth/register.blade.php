@@ -34,7 +34,8 @@
             <div class="mt-4">
                 <x-label for="CPF" :value="__('CPF')" />
 
-                <x-input id="CPF" class="block mt-1 w-full" type="text" name="CPF" :value="old('CPF')" required />
+                <x-input oninput="mascara(this, 'cpf')" id="CPF" class="block mt-1 w-full" type="text" name="CPF"
+                    :value="old('CPF')" required />
             </div>
 
             <!-- Telefone Celular -->
@@ -150,3 +151,23 @@
         </form>
     </x-auth-card>
 </x-guest-layout>
+
+{{-- Função para colocar máscara no input --}}
+<script>
+    function mascara(i, t) {
+
+        var v = i.value;
+
+        //Isso não permite que sejam inseridos caracteres diferentes de números
+        if (isNaN(v[v.length - 1])) {
+            i.value = v.substring(0, v.length - 1);
+            return;
+        }
+
+        if (t == "cpf") {
+            i.setAttribute("maxlength", "14");
+            if (v.length == 3 || v.length == 7) i.value += ".";
+            if (v.length == 11) i.value += "-";
+        }
+    }
+</script>
