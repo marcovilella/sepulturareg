@@ -3,7 +3,7 @@
         <x-slot name="logo">
             <a href="/">
                 <img class="h-20 fill-current text-gray-500"
-                    src="{{ config('app.url', 'http://localhost') }}/assets/Marca-PMC-cor.png" alt="">
+                    src="{{ config('app.url', 'http://localhost') }}/assets/imgs/Marca-PMC-cor.png" alt="">
                 {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
             </a>
         </x-slot>
