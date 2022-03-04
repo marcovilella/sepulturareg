@@ -36,6 +36,12 @@ class User extends Authenticatable
         'tipo',
     ];
 
+    public function documentos()
+    {
+        // return $this->hasMany(Contrato::class);
+        return $this->hasMany(Documento::class, 'user_id', 'id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

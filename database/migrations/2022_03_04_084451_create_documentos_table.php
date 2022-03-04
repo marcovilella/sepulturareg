@@ -15,10 +15,14 @@ class CreateDocumentosTable extends Migration
     {
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->integer('tipo_doc');
             $table->string('imagem');
             $table->string('nome');
+            $table->unsignedBigInteger('user_id');
+        });
+
+        Schema::table('documentos', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
