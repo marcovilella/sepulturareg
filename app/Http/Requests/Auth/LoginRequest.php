@@ -29,9 +29,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => [ 'string', 'email'],
-            'password' => ['required', 'string', 'min:6'],
-            'CPF' => [ 'required', 'string', 'min:14', 'users:unique' ],
+            'password' => ['required', 'string', 'min:8'],
+            'CPF' => [ 'required', 'string', 'min:14' ],
          ];
     }
     public function messages()
@@ -39,10 +38,6 @@ class LoginRequest extends FormRequest
         return [
             'required' => 'O campo :attribute é obrigatório',
             'CPF.min' => 'O campo CPF está inválido',
-            // 'email' => 'O email precisa ser válido',
-            'cpf.unique' => 'CPF já cadastrado',
-            'password.required' => 'O campo senha é obrigatório.',
-            'password.min' => 'O campo senha tem que ser no mínimo de 6 caracteres.',
         ];
     }
 
@@ -57,11 +52,11 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('CPF', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'CPF' => trans('Entrada não permitida, favor verificar dados do cpf e senha. '),
             ]);
         }
 
@@ -86,7 +81,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'CPF' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -100,6 +95,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey()
     {
-        return Str::lower($this->input('email')).'|'.$this->ip();
+        return Str::lower($this->input('CPF')).'|'.$this->ip();
     }
 }
