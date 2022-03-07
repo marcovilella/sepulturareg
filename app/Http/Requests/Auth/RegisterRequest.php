@@ -40,7 +40,7 @@ class RegisterRequest extends FormRequest
             'name.required' => 'O campo nome é obrigatório',
             'CPF.min' => 'O campo CPF está inválido',
             'email' => 'O email precisa ser válido',
-            'cpf.unique' => 'CPF já cadastrado',
+            'CPF.unique' => 'CPF já cadastrado',
             'password.required' => 'O campo senha é obrigatório.',
             'password.min' => 'O campo senha tem que ser no mínimo de 8 caracteres.',
             'password.confirmed' => 'Os campos senha e confirmação de senha devem ser iguais. ',
