@@ -207,8 +207,9 @@
         }
 
         if (t == "celular") {
-            i.setAttribute("maxlength", "10");
-            if (v.length == 5) i.value += "-";
+            i.setAttribute("maxlength", "13");
+            if (v.length == 2) i.value += " ";
+            if (v.length == 8) i.value += "-";
         }
 
         if (t == "cep") {
