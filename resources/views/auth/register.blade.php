@@ -75,7 +75,7 @@
             <div class="mt-4">
                 <x-label for="fixo" :value="__('Tel Fixo (Opcional)')" />
 
-                <x-input id="fixo" class="block mt-1 w-full" type="text" name="fixo" :value="old('fixo')" />
+                <x-input id="fixo" oninput="mascara(this, 'telefone')" class="block mt-1 w-full" type="text" name="fixo" :value="old('fixo')" />
             </div>
 
             <!-- Email -->
@@ -207,9 +207,17 @@
         }
 
         if (t == "celular") {
-            i.setAttribute("maxlength", "13");
-            if (v.length == 1) "(" + i[0].value;
-            if (v.length == 8) i.value += "-";
+            i.setAttribute("maxlength", "15");
+            if (v.length == 1) i.value = "(" + i.value;
+            if (v.length == 3) i.value += ") ";
+            if (v.length == 10) i.value += "-";
+        }
+
+        if (t == "telefone") {
+            i.setAttribute("maxlength", "14");
+            if (v.length == 1) i.value = "(" + i.value;
+            if (v.length == 3) i.value += ") ";
+            if (v.length == 9) i.value += "-";
         }
 
         if (t == "cep") {
