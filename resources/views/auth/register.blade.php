@@ -83,8 +83,10 @@
 
             <!-- Email -->
             <div class="mt-4">
-                <label for="email">Email</label>
-                <input type="email" class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('email') is-invalid @enderror" name="email" id="email">
+                <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
+                <input type="email"
+                    class="rounded-md shadow-sm letra-minuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('email') is-invalid @enderror"
+                    name="email" id="email">
 
                 {{-- <x-label for="email" :value="__('Email')" />
 
@@ -118,9 +120,13 @@
 
             <!-- Endereço -->
             <div class="mt-4">
-                <x-label for="endereco" :value="__('Avenida / Rua / Outro')" />
+                <label for="endereco" class="block font-medium text-sm text-gray-700">Endereço</label>
+                <input type="text"
+                    class="rounded-md shadow-sm letra-minuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                    name="endereco" id="endereco">
+                {{-- <x-label for="endereco" :value="__('Avenida / Rua / Outro')" />
 
-                <x-input id="endereco" class="block mt-1 w-full" type="text" name="endereco" />
+                <x-input id="endereco" class="block mt-1 w-full" type="text" name="endereco" /> --}}
             </div>
 
             <!-- Número -->
