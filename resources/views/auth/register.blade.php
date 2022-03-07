@@ -208,7 +208,7 @@
 
         if (t == "celular") {
             i.setAttribute("maxlength", "13");
-            if (v.length == 2) i.value += " ";
+            if (v.length == 1) "(" + i[0].value;
             if (v.length == 8) i.value += "-";
         }
 
