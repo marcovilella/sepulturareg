@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/documentos', function () {
     return view('documentos');
-});
+})->middleware(['auth'])->name('documentos');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
