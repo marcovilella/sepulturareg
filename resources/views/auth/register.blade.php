@@ -194,18 +194,20 @@
 
         var v = i.value;
 
-        //Isso não permite que sejam inseridos caracteres diferentes de números
+        // Isso não permite que sejam inseridos caracteres diferentes de números
         if (isNaN(v[v.length - 1])) {
             i.value = v.substring(0, v.length - 1);
             return;
         }
 
+        // Máscara para o cpf
         if (t == "cpf") {
             i.setAttribute("maxlength", "14");
             if (v.length == 3 || v.length == 7) i.value += ".";
             if (v.length == 11) i.value += "-";
         }
 
+        // Máscara para o celular
         if (t == "celular") {
             i.setAttribute("maxlength", "15");
             if (v.length == 1) i.value = "(" + i.value;
@@ -213,6 +215,7 @@
             if (v.length == 10) i.value += "-";
         }
 
+        // Máscara para o telefone
         if (t == "telefone") {
             i.setAttribute("maxlength", "14");
             if (v.length == 1) i.value = "(" + i.value;
@@ -220,6 +223,7 @@
             if (v.length == 9) i.value += "-";
         }
 
+        // Máscara para o CEP
         if (t == "cep") {
             i.setAttribute("maxlength", "9");
             if (v.length == 5) i.value += "-";
