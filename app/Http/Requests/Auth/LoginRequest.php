@@ -39,7 +39,7 @@ class LoginRequest extends FormRequest
         return [
             'required' => 'O campo :attribute é obrigatório',
             'CPF.min' => 'O campo CPF está inválido',
-            'email' => 'O email precisa ser válido',
+            // 'email' => 'O email precisa ser válido',
             'cpf.unique' => 'CPF já cadastrado',
             'password.required' => 'O campo senha é obrigatório.',
             'password.min' => 'O campo senha tem que ser no mínimo de 6 caracteres.',

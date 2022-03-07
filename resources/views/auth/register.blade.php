@@ -7,9 +7,8 @@
                 {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
             </a>
         </x-slot>
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        {{-- <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
@@ -18,31 +17,50 @@
             <div>
                 <x-label for="name" :value="__('Nome Completo')" />
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
+                <x-input id="name"
+                    class="block mt-1 w-full @error('name') is-invalid @enderror"
+                    type="text"
+                    name="name" :value="old('name')"
                     autofocus />
-            </div>
+                    @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <!-- Documento Identificação -->
-            <div class="mt-4">
-                <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
 
-                <x-input id="Doc_Ident" class="block mt-1 w-full" type="text" name="Doc_Ident" :value="old('Doc_Ident')" />
-            </div>
+                <!-- Documento Identificação -->
+                <div class="mt-4">
+                    <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
 
-            <!-- CPF -->
-            <div class="mt-4">
-                <x-label for="CPF" :value="__('CPF')" />
+                    <x-input id="Doc_Ident"
+                    class="block mt-1 w-full  @error('Doc_Ident') is-invalid @enderror"
+                    type="text"
+                    name="Doc_Ident" :value="old('Doc_Ident')" />
+                    @error('Doc_Ident')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                <x-input oninput="mascara(this, 'cpf')" id="CPF" class="block mt-1 w-full" type="text" name="CPF"
+                <!-- CPF -->
+                <div class="mt-4">
+                    <x-label for="CPF" :value="__('CPF')" />
+
+                    <x-input
+                    oninput="mascara(this, 'cpf')" id="CPF"
+                    class="block mt-1 w-full  @error('CPF') is-invalid @enderror"
+                    type="text" name="CPF"
                     :value="old('CPF')" />
-            </div>
+                    @error('CPF')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <!-- Telefone Celular -->
+                <!-- Telefone Celular -->
             <div class="mt-4">
                 <x-label for="celular" :value="__('Tel Celular')" />
 
                 <x-input oninput="mascara(this, 'celular')" id="celular" class="block mt-1 w-full" type="text"
-                    name="celular" :value="old('celular')" />
+                name="celular" :value="old('celular')" />
             </div>
 
             <!-- Whatsapp / Telegram -->
@@ -50,7 +68,7 @@
                 <x-label for="whats_tele" :value="__('Whatsapp / Telegram (Opcional)')" />
 
                 <x-input oninput="mascara(this, 'celular')" id="whats_tele" class="block mt-1 w-full" type="text" name="whats_tele"
-                    :value="old('whats_tele')" />
+                :value="old('whats_tele')" />
             </div>
 
             <!-- Telefone Fixo -->
@@ -64,23 +82,43 @@
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input id="email"
+                class="block mt-1 w-full @error('email') is-invalid @enderror"
+                type="text" name="email"
+                :value="old('email')"  />
+
+                @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Senha (Mínimo de 8 caracteres)')" />
 
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    autocomplete="new-password" />
+                <x-input
+                    id="password"
+                    class="block mt-1 w-full @error('password') is-invalid @enderror"
+                    type="password" name="password"
+                    autocomplete="new-password"
+                    :value="old('password')" />
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
                 <x-label for="password_confirmation" :value="__('Confirmar Senha')" />
 
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                    name="password_confirmation" required />
+                <x-input
+                    id="password"
+                    class="block mt-1 w-full @error('password') is-invalid @enderror"
+                    type="password"
+                    name="password_confirmation"
+                    autocomplete="current-password"
+                    :value="old('password')" />
+                    @error('password')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
             </div>
 
             <!-- Endereço -->
