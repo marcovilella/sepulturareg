@@ -11,7 +11,7 @@ class Documento extends Model
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'user_id',
+        // 'user_id',
         'tipo_doc',
         'imagem',
         'nome',
