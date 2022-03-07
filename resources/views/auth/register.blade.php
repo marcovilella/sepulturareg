@@ -15,77 +15,81 @@
 
             <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Nome Completo')" />
+                <label for="name" class="block font-medium text-sm text-gray-700">Nome Completo</label>
 
-                <x-input id="name"
-                    class="block mt-1 w-full @error('name') is-invalid @enderror"
-                    type="text"
-                    name="name" :value="old('name')"
-                    autofocus />
-                    @error('name')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                <input type="text"
+                    class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('name') is-invalid @enderror"
+                    name="name" id="name">
+
+                {{-- <x-label for="name" :value="__('Nome Completo')" /> --}}
+                {{-- <x-input id="name" class="block mt-1 w-full @error('name') is-invalid @enderror" type="text" name="name"
+                        :value="old('name')" autofocus /> --}}
+                @error('name')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
 
-                <!-- Documento Identificação -->
-                <div class="mt-4">
-                    <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
+            <!-- Documento Identificação -->
+            <div class="mt-4">
+                <label for="Doc_Ident" class="block font-medium text-sm text-gray-700">Documento de Identificação</label>
+                <input type="text"
+                    class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('Doc_Ident') is-invalid @enderror"
+                    name="Doc_Ident" id="Doc_Ident">
 
-                    <x-input id="Doc_Ident"
-                    class="block mt-1 w-full  @error('Doc_Ident') is-invalid @enderror"
-                    type="text"
-                    name="Doc_Ident" :value="old('Doc_Ident')" />
-                    @error('Doc_Ident')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                {{-- <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
+                    <x-input id="Doc_Ident" class="block mt-1 w-full  @error('Doc_Ident') is-invalid @enderror" type="text"
+                        name="Doc_Ident" :value="old('Doc_Ident')" /> --}}
+                @error('Doc_Ident')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
-                <!-- CPF -->
-                <div class="mt-4">
-                    <x-label for="CPF" :value="__('CPF')" />
+            <!-- CPF -->
+            <div class="mt-4">
+                <x-label for="CPF" :value="__('CPF')" />
 
-                    <x-input
-                    oninput="mascara(this, 'cpf')" id="CPF"
-                    class="block mt-1 w-full  @error('CPF') is-invalid @enderror"
-                    type="text" name="CPF"
+                <x-input oninput="mascara(this, 'cpf')" id="CPF"
+                    class="block mt-1 w-full  @error('CPF') is-invalid @enderror" type="text" name="CPF"
                     :value="old('CPF')" />
-                    @error('CPF')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                @error('CPF')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
-                <!-- Telefone Celular -->
+            <!-- Telefone Celular -->
             <div class="mt-4">
                 <x-label for="celular" :value="__('Tel Celular')" />
 
                 <x-input oninput="mascara(this, 'celular')" id="celular" class="block mt-1 w-full" type="text"
-                name="celular" :value="old('celular')" />
+                    name="celular" :value="old('celular')" />
             </div>
 
             <!-- Whatsapp / Telegram -->
             <div class="mt-4">
                 <x-label for="whats_tele" :value="__('Whatsapp / Telegram (Opcional)')" />
 
-                <x-input oninput="mascara(this, 'celular')" id="whats_tele" class="block mt-1 w-full" type="text" name="whats_tele"
-                :value="old('whats_tele')" />
+                <x-input oninput="mascara(this, 'celular')" id="whats_tele" class="block mt-1 w-full" type="text"
+                    name="whats_tele" :value="old('whats_tele')" />
             </div>
 
             <!-- Telefone Fixo -->
             <div class="mt-4">
                 <x-label for="fixo" :value="__('Tel Fixo (Opcional)')" />
 
-                <x-input id="fixo" oninput="mascara(this, 'telefone')" class="block mt-1 w-full" type="text" name="fixo" :value="old('fixo')" />
+                <x-input id="fixo" oninput="mascara(this, 'telefone')" class="block mt-1 w-full" type="text" name="fixo"
+                    :value="old('fixo')" />
             </div>
 
             <!-- Email -->
             <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+                <label for="email">Email</label>
+                <input type="email" class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('email') is-invalid @enderror" name="email" id="email">
 
-                <x-input id="email"
-                class="block mt-1 w-full @error('email') is-invalid @enderror"
-                type="text" name="email"
-                :value="old('email')"  />
+                {{-- <x-label for="email" :value="__('Email')" />
+
+                <x-input id="email" class="block mt-1 w-full @error('email') is-invalid @enderror" type="email"
+                    name="email" :value="old('email')" /> --}}
 
                 @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -97,28 +101,19 @@
             <div class="mt-4">
                 <x-label for="password" :value="__('Senha (Mínimo de 8 caracteres)')" />
 
-                <x-input
-                    id="password"
-                    class="block mt-1 w-full @error('password') is-invalid @enderror"
-                    type="password" name="password"
-                    autocomplete="new-password"
-                    :value="old('password')" />
+                <x-input id="password" class="block mt-1 w-full @error('password') is-invalid @enderror" type="password"
+                    name="password" autocomplete="new-password" :value="old('password')" />
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
                 <x-label for="password_confirmation" :value="__('Confirmar Senha')" />
 
-                <x-input
-                    id="password"
-                    class="block mt-1 w-full @error('password') is-invalid @enderror"
-                    type="password"
-                    name="password_confirmation"
-                    autocomplete="current-password"
-                    :value="old('password')" />
-                    @error('password')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <x-input id="password" class="block mt-1 w-full @error('password') is-invalid @enderror" type="password"
+                    name="password_confirmation" autocomplete="current-password" :value="old('password')" />
+                @error('password')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Endereço -->
@@ -164,7 +159,32 @@
                     class="block mt-1 w-full form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                     type="text" name="estado">
                     <option value="" selected>Selecione</option>
+                    <option value="ACRE">ACRE</option>
+                    <option value="ALAGOAS">ALAGOAS</option>
+                    <option value="AMAPÁ">AMAPÁ</option>
+                    <option value="AMAZONAS">AMAZONAS</option>
+                    <option value="BAHIA">BAHIA</option>
+                    <option value="CEARA">CEARA</option>
+                    <option value="DISTRITO FEDERAL">DISTRITO FEDERAL</option>
+                    <option value="ESPIRÍTO SANTO">ESPIRÍTO SANTO</option>
+                    <option value="GOIÁS">GOIÁS</option>
+                    <option value="MARANHÃO">MARANHÃO</option>
+                    <option value="MATO GROSSO">MATO GROSSO</option>
+                    <option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
                     <option value="MINAS GERAIS">MINAS GERAIS</option>
+                    <option value="PARÁ">PARÁ</option>
+                    <option value="PARAÍBA">PARAÍBA</option>
+                    <option value="PARANÁ">PARANÁ</option>
+                    <option value="PERNAMBUCO">PERNAMBUCO</option>
+                    <option value="PIAUÍ">PIAUÍ</option>
+                    <option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
+                    <option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
+                    <option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
+                    <option value="RONDÔNIA">RONDÔNIA</option>
+                    <option value="SANTA CATARINA">SANTA CATARINA</option>
+                    <option value="SÃO PAULO">SÃO PAULO</option>
+                    <option value="SERGIPE">SERGIPE</option>
+                    <option value="TOCANTINS">TOCANTINS</option>
                 </select>
             </div>
 
