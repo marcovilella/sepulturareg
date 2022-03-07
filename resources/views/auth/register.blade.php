@@ -15,15 +15,14 @@
 
             <!-- Name -->
             <div>
-                <label for="name" class="block font-medium text-sm text-gray-700">Nome Completo</label>
-
+                {{-- <label for="name" class="block font-medium text-sm text-gray-700">Nome Completo</label>
                 <input type="text"
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('name') is-invalid @enderror"
-                    name="name" id="name">
+                    name="name" id="name"> --}}
 
-                {{-- <x-label for="name" :value="__('Nome Completo')" /> --}}
-                {{-- <x-input id="name" class="block mt-1 w-full @error('name') is-invalid @enderror" type="text" name="name"
-                        :value="old('name')" autofocus /> --}}
+                <x-label for="name" :value="__('Nome Completo')" />
+                <x-input id="name" class="block mt-1 w-full @error('name') is-invalid @enderror" type="text" name="name"
+                        :value="old('name')" autofocus />
                 @error('name')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -32,14 +31,14 @@
 
             <!-- Documento Identificação -->
             <div class="mt-4">
-                <label for="Doc_Ident" class="block font-medium text-sm text-gray-700">Documento de Identificação</label>
+                {{-- <label for="Doc_Ident" class="block font-medium text-sm text-gray-700">Documento de Identificação</label>
                 <input type="text"
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('Doc_Ident') is-invalid @enderror"
-                    name="Doc_Ident" id="Doc_Ident">
+                    name="Doc_Ident" id="Doc_Ident"> --}}
 
-                {{-- <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
+                <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
                     <x-input id="Doc_Ident" class="block mt-1 w-full  @error('Doc_Ident') is-invalid @enderror" type="text"
-                        name="Doc_Ident" :value="old('Doc_Ident')" /> --}}
+                        name="Doc_Ident" :value="old('Doc_Ident')" />
                 @error('Doc_Ident')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -83,15 +82,15 @@
 
             <!-- Email -->
             <div class="mt-4">
-                <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
+                {{-- <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
                 <input type="email"
                     class="rounded-md shadow-sm letra-minuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('email') is-invalid @enderror"
-                    name="email" id="email">
+                    name="email" id="email"> --}}
 
-                {{-- <x-label for="email" :value="__('Email')" />
+                <x-label for="email" :value="__('Email')" />
 
                 <x-input id="email" class="block mt-1 w-full @error('email') is-invalid @enderror" type="email"
-                    name="email" :value="old('email')" /> --}}
+                    name="email" :value="old('email')" />
 
                 @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -120,13 +119,14 @@
 
             <!-- Endereço -->
             <div class="mt-4">
-                <label for="endereco" class="block font-medium text-sm text-gray-700">Endereço</label>
+                {{-- <label for="endereco" class="block font-medium text-sm text-gray-700">Endereço</label>
                 <input type="text"
-                    class="rounded-md shadow-sm letra-minuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                    name="endereco" id="endereco">
-                {{-- <x-label for="endereco" :value="__('Avenida / Rua / Outro')" />
+                    class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                    name="endereco" id="endereco"> --}}
 
-                <x-input id="endereco" class="block mt-1 w-full" type="text" name="endereco" /> --}}
+                <x-label for="endereco" :value="__('Avenida / Rua / Outro')" />
+
+                <x-input id="endereco" class="block mt-1 w-full" type="text" name="endereco" />
             </div>
 
             <!-- Número -->
@@ -138,22 +138,34 @@
 
             <!-- Complemento -->
             <div class="mt-4">
-                <x-label for="complemento" :value="__('Complemento')" />
+                {{-- <label for="complemento" class="block font-medium text-sm text-gray-700">Complemento</label>
+                <input type="text"
+                    class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                    name="complemento" id="complemento"> --}}
 
+                <x-label for="complemento" :value="__('Complemento')" />
                 <x-input id="complemento" class="block mt-1 w-full" type="text" name="complemento" />
             </div>
 
             <!-- Bairro -->
             <div class="mt-4">
-                <x-label for="bairro" :value="__('Bairro')" />
+                {{-- <label for="bairro" class="block font-medium text-sm text-gray-700">Bairro</label>
+                <input type="text"
+                    class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                    name="bairro" id="bairro"> --}}
 
+                <x-label for="bairro" :value="__('Bairro')" />
                 <x-input id="bairro" class="block mt-1 w-full" type="text" name="bairro" />
             </div>
 
             <!-- Cidade -->
             <div class="mt-4">
-                <x-label for="cidade" :value="__('Cidade')" />
+                {{-- <label for="cidade" class="block font-medium text-sm text-gray-700">Cidade</label>
+                <input type="text"
+                    class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                    name="cidade" id="cidade"> --}}
 
+                <x-label for="cidade" :value="__('Cidade')" />
                 <x-input id="cidade" class="block mt-1 w-full" type="text" name="cidade" />
             </div>
 
@@ -165,32 +177,32 @@
                     class="block mt-1 w-full form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                     type="text" name="estado">
                     <option value="" selected>Selecione</option>
-                    <option value="ACRE">ACRE</option>
-                    <option value="ALAGOAS">ALAGOAS</option>
-                    <option value="AMAPÁ">AMAPÁ</option>
-                    <option value="AMAZONAS">AMAZONAS</option>
-                    <option value="BAHIA">BAHIA</option>
-                    <option value="CEARA">CEARA</option>
-                    <option value="DISTRITO FEDERAL">DISTRITO FEDERAL</option>
-                    <option value="ESPIRÍTO SANTO">ESPIRÍTO SANTO</option>
-                    <option value="GOIÁS">GOIÁS</option>
-                    <option value="MARANHÃO">MARANHÃO</option>
-                    <option value="MATO GROSSO">MATO GROSSO</option>
-                    <option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
-                    <option value="MINAS GERAIS">MINAS GERAIS</option>
-                    <option value="PARÁ">PARÁ</option>
-                    <option value="PARAÍBA">PARAÍBA</option>
-                    <option value="PARANÁ">PARANÁ</option>
-                    <option value="PERNAMBUCO">PERNAMBUCO</option>
-                    <option value="PIAUÍ">PIAUÍ</option>
-                    <option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
-                    <option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
-                    <option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
-                    <option value="RONDÔNIA">RONDÔNIA</option>
-                    <option value="SANTA CATARINA">SANTA CATARINA</option>
-                    <option value="SÃO PAULO">SÃO PAULO</option>
-                    <option value="SERGIPE">SERGIPE</option>
-                    <option value="TOCANTINS">TOCANTINS</option>
+                    <option value="Acre">Acre</option>
+                    <option value="Alagoas">Alagoas</option>
+                    <option value="Amapá">Amapá</option>
+                    <option value="Amazonas">Amazonas</option>
+                    <option value="Bahia">Bahia</option>
+                    <option value="Ceara">Ceara</option>
+                    <option value="Distrito Federal">Distrito Federal</option>
+                    <option value="Epiríto Santo">Epiríto Santo</option>
+                    <option value="Goiás">Goiás</option>
+                    <option value="Maranhão">Maranhão</option>
+                    <option value="Mato Grosso">Mato Grosso</option>
+                    <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                    <option value="Minas Gerais">Minas Gerais</option>
+                    <option value="Pará">Pará</option>
+                    <option value="Paraíba">Paraíba</option>
+                    <option value="Paraná">Paraná</option>
+                    <option value="Pernambuco">Pernambuco</option>
+                    <option value="Piauí">Piauí</option>
+                    <option value="Rio de Janeiro">Rio de Janeiro</option>
+                    <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                    <option value="Rio Grande do  Sul">Rio Grande do  Sul</option>
+                    <option value="Rondônia">Rondônia</option>
+                    <option value="Santa Catarina">Santa Catarina</option>
+                    <option value="São Paulo">São Paulo</option>
+                    <option value="Sergipe">Sergipe</option>
+                    <option value="Tocantins">Tocantins</option>
                 </select>
             </div>
 
