@@ -10,8 +10,11 @@ class Documento extends Model
 {
     use HasFactory, Notifiable;
 
+    public $timestamps = FALSE;
+
+
     protected $fillable = [
-        // 'user_id',
+        'user_id',
         'tipo_doc',
         'imagem',
         'nome',

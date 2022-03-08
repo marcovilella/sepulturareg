@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
+use App\Models\Documento;
 class DocumentosController extends Controller
 {
     /**
@@ -23,7 +24,8 @@ class DocumentosController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('documentos');
     }
 
     /**
@@ -34,11 +36,15 @@ class DocumentosController extends Controller
      */
     public function store(Request $request)
     {
+        $cpf = Auth::user()->CPF;
+        $cpf = str_replace(".","",$cpf);
+        $path = str_replace("-","",$cpf);
+
         // Nome da imagem
         $nomeArquivo = null;
 
         if ($request->hasFile('Doc_Ident_Frente') && $request->file('Doc_Ident_Frente')->isValid()) {
-            
+
             // Coloca um nome aleatório no arquivo baseado no timestamps atual
             $nome = uniqid(date('HisYmd'));
 
@@ -46,12 +52,22 @@ class DocumentosController extends Controller
 
             $nomeArquivo = "{$nome}.{$extensao}";
 
-            $upload = $request->Doc_Ident_Frente->storeAs('Documentos', $nomeArquivo);
+            $upload = $request->Doc_Ident_Frente->storeAs("public/" . $path, $nomeArquivo);
 
             if (!$upload) {
                 return "Falhou";
             }
-            return "Imagem salva";
+            $tipo = 1;
+            $user = Auth::user();
+            $arq = str_replace("public","storage",$upload);
+
+            $doc = Documento::create([
+                'user_id' => $user->id,
+                'tipo_doc' => $tipo,
+                'imagem' => $arq,
+                'nome' => "Documento de Identificação Frente",
+            ]);
+            return view('documentos', ['images' => $doc ]);
         }
         echo "Nenhuma imagem";
     }
