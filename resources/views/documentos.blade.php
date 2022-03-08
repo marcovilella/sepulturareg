@@ -1,11 +1,11 @@
 @extends('layout')
 @section('secao')
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-prm">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/Marca-PMC-cor.png"
                     style="height: 40px; width: 90px; overflow-wrap: break-word;"
-                    class="d-inline-block h-10 img-fluid align-center" class="img-thumbnail" alt="...">
+                    class="bg-light d-inline-block h-10 img-fluid align-center" class="img-thumbnail" alt="...">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
