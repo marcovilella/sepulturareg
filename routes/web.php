@@ -18,9 +18,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/documentos', function () {
-    return view('documentos');
-})->middleware(['auth'])->name('documentos');
+Route::get('/documentos', [DocumentosController::class,'create'])->middleware(['auth'])->name('documentos');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
