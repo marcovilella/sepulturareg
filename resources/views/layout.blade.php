@@ -408,7 +408,8 @@
 
     <style>
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Open', sans-serif;
+            font-weight: 200;
         }
 
         .bg-prm {
