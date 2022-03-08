@@ -24,7 +24,7 @@
                                     @csrf
 
                                     <a class="dropdown-item" :href="route('logout')" onclick="event.preventDefault();
-                                                                this.closest('form').submit();">
+                                                                            this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -48,37 +48,51 @@
                                 alt="...">
                         </a>
                     </div>
-                    @isset(!$images)
-                    <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente</label>
-                    <input class="form-control" type="file" name="Doc_Ident_Frente" id="Doc_Ident_Frente">
-                    @endisset
+                    @if (!$Doc_Ident_Frente)
+                        <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente</label>
+                        <input class="form-control" type="file" name="Doc_Ident_Frente" id="Doc_Ident_Frente">
+                    @endif
                 </div>
                 <div class="mb-3">
-                    <label for="Doc_Ident_Verso" class="form-label">Documento de Identificação Verso</label>
-                    <input class="form-control" type="file" name="Doc_Ident_Verso" id="Doc_Ident_Verso">
+                    @if (!$Doc_Ident_Verso)
+                        <label for="Doc_Ident_Verso" class="form-label">Documento de Identificação Verso</label>
+                        <input class="form-control" type="file" name="Doc_Ident_Verso" id="Doc_Ident_Verso">
+                    @endif
                 </div>
                 <div class="mb-3">
-                    <label for="cpf" class="form-label">CPF</label>
-                    <input class="form-control" type="file" name="cpf" id="cpf">
+                    @if (!$cpf)
+                        <label for="cpf" class="form-label">CPF</label>
+                        <input class="form-control" type="file" name="cpf" id="cpf">
+                    @endif
                 </div>
                 <div class="mb-3">
-                    <label for="comprovante_endereco" class="form-label">Comprovante de Endereço</label>
-                    <input class="form-control" type="file" name="comprovante_endereco" id="comprovante_endereco">
+                    @if (!$comprovante_endereco)
+                        <label for="comprovante_endereco" class="form-label">Comprovante de Endereço</label>
+                        <input class="form-control" type="file" name="comprovante_endereco" id="comprovante_endereco">
+                    @endif
                 </div>
                 <div class="mb-3">
-                    <label for="comprovante_titularidade_jazigo" class="form-label">Comprovante de Titularidade de
-                        Jazigo</label>
-                    <input class="form-control" type="file" name="comprovante_titularidade_jazigo"
-                        id="comprovante_titularidade_jazigo">
+                    @if (!$comprovante_titularidade_jazigo)
+                        <label for="comprovante_titularidade_jazigo" class="form-label">Comprovante de Titularidade de
+                            Jazigo</label>
+                        <input class="form-control" type="file" name="comprovante_titularidade_jazigo"
+                            id="comprovante_titularidade_jazigo">
+                    @endif
                 </div>
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">Certidão de Óbito do Último Sepultado</label>
-                    <input class="form-control" type="file" id="formFile">
+                    @if (!$certidao_obito)
+                        <label for="certidao_obito" class="form-label">Certidão de Óbito do Último Sepultado</label>
+                        <input class="form-control" type="file" name="certidao_obito" id="certidao_obito">
+                    @endif
                 </div>
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">Inventário ou Formal de Partilha, caso o Titular do jazigo
-                        seja falecido, de acordo com o art.13 da Lei 1.871 de 21 de janeiro de 1.998</label>
-                    <input class="form-control" type="file" id="formFile">
+                    @if (!$inventario_formal_partilha)
+                        <label for="inventario_formal_partilha" class="form-label">Inventário ou Formal de Partilha,
+                            caso o Titular do jazigo
+                            seja falecido, de acordo com o art.13 da Lei 1.871 de 21 de janeiro de 1.998</label>
+                        <input class="form-control" type="file" name="inventario_formal_partilha"
+                            id="inventario_formal_partilha">
+                    @endif
                 </div>
                 <button type="submit" class="btn">Enviar</button>
             </div>
@@ -87,12 +101,14 @@
 
     <!-- Modal -->
     <div class="modal fade" id="imagemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mx-auto">
                     <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/adicionar-imagem.png"
-                        class="img-fluid" alt="...">
+                        class="img-fluid mx-auto" alt="...">
                 </div>
             </div>
         </div>
