@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
 use App\Models\Documento;
-
+use Auth;
+use Illuminate\Support\Facades\Storage;
 class DocumentosController extends Controller
 {
     /**
@@ -25,22 +25,73 @@ class DocumentosController extends Controller
      */
     public function create()
     {
+        // Pegando o id do usuário logado
         $idUsuario = Auth::user()->id;
-        $documentos = Documento::where('user_id', $idUsuario)->get();
-        $identidadeFrente = $documentos->where('tipo_doc', 1);
-        echo $identidadeFrente;
-        // $identidadeFrente = null;
-        $identidadeVerso = null;
-        $cpf = null;
-        $comprovanteEndereco = null;
-        $comprovanteTitularidadeJazigo = null;
-        $certidaoObito = null;
-        $inventarioFormalPartilha = null;
+
+        // Verificando se existe algum documento vinculado à aquele usuário
+        if (Documento::where('user_id', $idUsuario)->exists()) {
+
+            // Caso existam documentos vinculados atribuimos eles a variável documentos
+            $documentos = Documento::where('user_id', $idUsuario)->get();
+
+            // Para cada documento se ele não estiver vazio são inseridos os valores neles
+            foreach ($documentos as $documento) {
+                if ($documento->where('tipo_doc', 1)->exists()) {
+                    $identidadeFrente = $documento->where('tipo_doc', 1)->get();
+                    $identidadeFrente = $identidadeFrente[0];
+                } else {
+                    $identidadeFrente = null;
+                }
+                if ($documento->where('tipo_doc', 2)->exists()) {
+                    $identidadeVerso = $documento->where('tipo_doc', 2)->get();
+                    $identidadeVerso = $identidadeVerso[0];
+                } else {
+                    $identidadeVerso = null;
+                }
+                if ($documento->where('tipo_doc', 3)->exists()) {
+                    $cpf = $documento->where('tipo_doc', 3)->get();
+                    $cpf = $cpf[0];
+                } else {
+                    $cpf = null;
+                }
+                if ($documento->where('tipo_doc', 4)->exists()) {
+                    $comprovanteEndereco = $documento->where('tipo_doc', 4)->get();
+                    $comprovanteEndereco = $comprovanteEndereco[0];
+                } else {
+                    $comprovanteEndereco = null;
+                }
+                if ($documento->where('tipo_doc', 5)->exists()) {
+                    $comprovanteTitularidadeJazigo = $documento->where('tipo_doc', 5)->get();
+                    $comprovanteTitularidadeJazigo = $comprovanteTitularidadeJazigo[0];
+                } else {
+                    $comprovanteTitularidadeJazigo = null;
+                }
+                if ($documento->where('tipo_doc', 6)->exists()) {
+                    $certidaoObito = $documento->where('tipo_doc', 6)->get();
+                    $certidaoObito = $certidaoObito[0];
+                } else {
+                    $certidaoObito = null;
+                }
+                if ($documento->where('tipo_doc', 7)->exists()) {
+                    $inventarioFormalPartilha = $documento->where('tipo_doc', 7)->get();
+                    $inventarioFormalPartilha = $inventarioFormalPartilha[0];
+                } else {
+                    $inventarioFormalPartilha = null;
+                }
+            }
+        } else {
+            $identidadeFrente = null;
+            $identidadeVerso = null;
+            $cpf = null;
+            $comprovanteEndereco = null;
+            $comprovanteTitularidadeJazigo = null;
+            $certidaoObito = null;
+            $inventarioFormalPartilha = null;
+        }
         return view(
             'documentos',
             [
-                // 'documentos' => $documentos,
-                'Doc_Ident_Frente' => null,
+                'Doc_Ident_Frente' => $identidadeFrente,
                 'Doc_Ident_Verso' => $identidadeVerso,
                 'cpf' => $cpf,
                 'comprovante_endereco' => $comprovanteEndereco,
@@ -80,6 +131,7 @@ class DocumentosController extends Controller
             if (!$upload) {
                 return "Falhou";
             }
+
             $tipo = 1;
             $user = Auth::user();
             $arq = str_replace("public", "storage", $upload);
@@ -90,7 +142,7 @@ class DocumentosController extends Controller
                 'imagem' => $arq,
                 'nome' => "Documento de Identificação Frente",
             ]);
-            // return view('documentos', ['images' => $doc]);
+
             if (
                 !$request->hasFile('Doc_Ident_Verso') &&
                 !$request->hasFile('cpf') &&
@@ -127,7 +179,7 @@ class DocumentosController extends Controller
                 'imagem' => $arq,
                 'nome' => "Documento de Identificação Verso",
             ]);
-            // return view('documentos', ['images' => $doc]);
+
             if (
                 !$request->hasFile('cpf') &&
                 !$request->hasFile('comprovante_endereco') &&
@@ -163,7 +215,7 @@ class DocumentosController extends Controller
                 'imagem' => $arq,
                 'nome' => "CPF",
             ]);
-            // return view('documentos', ['images' => $doc]);
+
             if (
                 !$request->hasFile('comprovante_endereco') &&
                 !$request->hasFile('comprovante_titularidade_jazigo') &&
@@ -198,7 +250,7 @@ class DocumentosController extends Controller
                 'imagem' => $arq,
                 'nome' => "Comprovante de Endereço",
             ]);
-            // return view('documentos', ['images' => $doc]);
+
             if (
                 !$request->hasFile('comprovante_titularidade_jazigo') &&
                 !$request->hasFile('certidao_obito') &&
@@ -231,7 +283,7 @@ class DocumentosController extends Controller
                 'imagem' => $arq,
                 'nome' => "Comprovante de Titularidade de Jazigo",
             ]);
-            // return view('documentos', ['images' => $doc]);
+
             if (
                 !$request->hasFile('certidao_obito') &&
                 !$request->hasFile('inventario_formal_partilha')
@@ -263,7 +315,7 @@ class DocumentosController extends Controller
                 'imagem' => $arq,
                 'nome' => "Certidão de Óbito",
             ]);
-            // return view('documentos', ['images' => $doc]);
+
             if (
                 !$request->hasFile('inventario_formal_partilha')
             ) {
@@ -294,8 +346,8 @@ class DocumentosController extends Controller
                 'imagem' => $arq,
                 'nome' => "Inventário ou Formal de Partilha",
             ]);
-            // return view('documentos', ['images' => $doc]);
-                return redirect('documentos');
+
+            return redirect('documentos');
         }
         echo "Nenhuma imagem";
     }
