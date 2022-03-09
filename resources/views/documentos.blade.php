@@ -25,7 +25,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                        this.closest('form').submit();">
+                                                                                                                                                                                            this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -40,7 +40,7 @@
     <form action="/upload" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-12 mt-5">
-            <div class="col-xl-5 p-5 bg-light mx-auto">
+            <div class="col-xl-5 p-5 mx-auto">
                 <div class="mb-3">
                     @if (!$Doc_Ident_Frente)
                         <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente <a
@@ -72,7 +72,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-primary">Remover Imagem</a>
+                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-primary">Remover Imagem</a>
+                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-primary">Remover Imagem</a>
+                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-primary">Remover Imagem</a>
+                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +228,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-primary">Remover Imagem</a>
+                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +266,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-primary">Remover Imagem</a>
+                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -309,15 +309,17 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-primary">Remover Imagem</a>
+                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @endif
                 </div>
-                @if (!$Doc_Ident_Frente || !$Doc_Ident_Verso || !$cpf || !$comprovante_endereco || !$comprovante_titularidade_jazigo || !$certidao_obito || !$inventario_formal_partilha)
-                    <button type="submit" class="btn">Enviar</button>
+                @if (!$Doc_Ident_Frente || $Doc_Ident_Verso || !$cpf || !$comprovante_endereco || !$comprovante_titularidade_jazigo || !$certidao_obito || !$inventario_formal_partilha)
+                    <div class="text-center">
+                        <button type="submit" class="btn bg-prm">Enviar</button>
+                    </div>
                 @endif
             </div>
         </div>
