@@ -74,7 +74,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +114,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +152,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +192,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +234,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -278,7 +273,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
@@ -323,7 +317,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a class="btn btn-danger">Remover Imagem</a>
                                     </div>
                                 </div>
                             </div>
