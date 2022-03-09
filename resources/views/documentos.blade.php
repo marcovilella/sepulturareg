@@ -54,6 +54,8 @@
                                     style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
                                     alt="...">
                             </a>
+                            <br>
+                            <a class="btn btn-danger">Remover Imagem</a>
                         </div>
                         <!-- Modal Identidade Frente -->
                         <div class="modal fade" id="Doc_Ident_Frente_Modal" tabindex="-1"
@@ -92,6 +94,8 @@
                                     style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
                                     alt="...">
                             </a>
+                            <br>
+                            <a class="btn btn-danger">Remover Imagem</a>
                         </div>
 
                         <!-- Modal Identidade Verso -->
@@ -130,6 +134,8 @@
                                     style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
                                     alt="...">
                             </a>
+                            <br>
+                            <a class="btn btn-danger">Remover Imagem</a>
                         </div>
                         <!-- Modal CPF -->
                         <div class="modal fade" id="cpf_Modal" tabindex="-1" aria-labelledby="cpfModalLabel"
@@ -168,6 +174,8 @@
                                     style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
                                     alt="{{ $comprovante_endereco->nome }}">
                             </a>
+                            <br>
+                            <a class="btn btn-danger">Remover Imagem</a>
                         </div>
                         <!-- Modal Comprovante de endereço -->
                         <div class="modal fade" id="comprovante_endereco_Modal" tabindex="-1"
@@ -209,6 +217,8 @@
                                     style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
                                     alt="...">
                             </a>
+                            <br>
+                            <a class="btn btn-danger">Remover Imagem</a>
                         </div>
                         <!-- Modal Comprovante de Titularidade ou Jazigo -->
                         <div class="modal fade" id="comprovante_titularidade_jazigo_Modal" tabindex="-1"
@@ -248,6 +258,8 @@
                                     style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
                                     alt="...">
                             </a>
+                            <br>
+                            <a class="btn btn-danger">Remover Imagem</a>
                         </div>
                         <!-- Modal Certidão de Óbito -->
                         <div class="modal fade" id="certidao_obito_Modal" tabindex="-1"
@@ -290,6 +302,8 @@
                                     style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
                                     alt="...">
                             </a>
+                            <br>
+                            <a class="btn btn-danger">Remover Imagem</a>
                         </div>
                         <!-- Modal Inventário Formal ou Partilha -->
                         <div class="modal fade" id="inventario_formal_partilha_Modal" tabindex="-1"
