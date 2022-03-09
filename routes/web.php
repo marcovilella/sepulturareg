@@ -19,10 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/documentos', [DocumentosController::class,'create'])->middleware(['auth'])->name('documentos');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DocumentosController::class,'index'])->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
