@@ -316,7 +316,7 @@
                         </div>
                     @endif
                 </div>
-                @if (!$Doc_Ident_Frente || $Doc_Ident_Verso || !$cpf || !$comprovante_endereco || !$comprovante_titularidade_jazigo || !$certidao_obito || !$inventario_formal_partilha)
+                @if (!$Doc_Ident_Frente || !$Doc_Ident_Verso || !$cpf || !$comprovante_endereco || !$comprovante_titularidade_jazigo || !$certidao_obito || !$inventario_formal_partilha)
                     <div class="text-center">
                         <button type="submit" class="btn bg-prm">Enviar</button>
                     </div>
