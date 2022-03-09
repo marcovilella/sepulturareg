@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Documento;
+use App\Models\User;
+
 use Auth;
 use Illuminate\Support\Facades\Storage;
 class DocumentosController extends Controller
@@ -15,7 +17,14 @@ class DocumentosController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = User::all();
+
+        foreach ($usuarios as $usuario) {
+            $usuario->documentos->where('user_id', $usuario->id);
+        }
+        // return $usuarios;
+
+        return view('dashboard', ['usuarios' => $usuarios]);
     }
 
     /**
@@ -27,7 +36,7 @@ class DocumentosController extends Controller
     {
         // Pegando o id do usuário logado
         $idUsuario = Auth::user()->id;
-
+        
         // Verificando se existe algum documento vinculado à aquele usuário
         if (Documento::where('user_id', $idUsuario)->exists()) {
 
@@ -36,44 +45,44 @@ class DocumentosController extends Controller
 
             // Para cada documento se ele não estiver vazio são inseridos os valores neles
             foreach ($documentos as $documento) {
-                if ($documento->where('tipo_doc', 1)->exists()) {
-                    $identidadeFrente = $documento->where('tipo_doc', 1)->get();
+                if ($documento->where('tipo_doc', 1, )->where('user_id', $idUsuario)->exists()) {
+                    $identidadeFrente = $documento->where('tipo_doc', 1)->where('user_id', $idUsuario)->get();
                     $identidadeFrente = $identidadeFrente[0];
                 } else {
                     $identidadeFrente = null;
                 }
-                if ($documento->where('tipo_doc', 2)->exists()) {
-                    $identidadeVerso = $documento->where('tipo_doc', 2)->get();
+                if ($documento->where('tipo_doc', 2)->where('user_id', $idUsuario)->exists()) {
+                    $identidadeVerso = $documento->where('tipo_doc', 2)->where('user_id', $idUsuario)->get();
                     $identidadeVerso = $identidadeVerso[0];
                 } else {
                     $identidadeVerso = null;
                 }
-                if ($documento->where('tipo_doc', 3)->exists()) {
+                if ($documento->where('tipo_doc', 3)->where('user_id', $idUsuario)->where('user_id', $idUsuario)->exists()) {
                     $cpf = $documento->where('tipo_doc', 3)->get();
                     $cpf = $cpf[0];
                 } else {
                     $cpf = null;
                 }
-                if ($documento->where('tipo_doc', 4)->exists()) {
-                    $comprovanteEndereco = $documento->where('tipo_doc', 4)->get();
+                if ($documento->where('tipo_doc', 4)->where('user_id', $idUsuario)->exists()) {
+                    $comprovanteEndereco = $documento->where('tipo_doc', 4)->where('user_id', $idUsuario)->get();
                     $comprovanteEndereco = $comprovanteEndereco[0];
                 } else {
                     $comprovanteEndereco = null;
                 }
-                if ($documento->where('tipo_doc', 5)->exists()) {
-                    $comprovanteTitularidadeJazigo = $documento->where('tipo_doc', 5)->get();
+                if ($documento->where('tipo_doc', 5)->where('user_id', $idUsuario)->exists()) {
+                    $comprovanteTitularidadeJazigo = $documento->where('tipo_doc', 5)->where('user_id', $idUsuario)->get();
                     $comprovanteTitularidadeJazigo = $comprovanteTitularidadeJazigo[0];
                 } else {
                     $comprovanteTitularidadeJazigo = null;
                 }
-                if ($documento->where('tipo_doc', 6)->exists()) {
-                    $certidaoObito = $documento->where('tipo_doc', 6)->get();
+                if ($documento->where('tipo_doc', 6)->where('user_id', $idUsuario)->exists()) {
+                    $certidaoObito = $documento->where('tipo_doc', 6)->where('user_id', $idUsuario)->get();
                     $certidaoObito = $certidaoObito[0];
                 } else {
                     $certidaoObito = null;
                 }
-                if ($documento->where('tipo_doc', 7)->exists()) {
-                    $inventarioFormalPartilha = $documento->where('tipo_doc', 7)->get();
+                if ($documento->where('tipo_doc', 7)->where('user_id', $idUsuario)->exists()) {
+                    $inventarioFormalPartilha = $documento->where('tipo_doc', 7)->where('user_id', $idUsuario)->get();
                     $inventarioFormalPartilha = $inventarioFormalPartilha[0];
                 } else {
                     $inventarioFormalPartilha = null;
