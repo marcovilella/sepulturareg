@@ -417,6 +417,15 @@
             color: white;
         }
 
+        .btn-prm {
+            background-color: #1780bc;
+            color: white;
+        }
+        .btn-prm:hover {
+            background-color: #4191c0;
+            color: white;
+        }
+
     </style>
 
 </head>
