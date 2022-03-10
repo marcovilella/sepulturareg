@@ -20,9 +20,9 @@
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('name') is-invalid @enderror"
                     name="name" id="name"> --}}
 
-                <x-label for="name" :value="__('Nome Completo')" />
+                <x-label for="name" :value="__('Nome Completo *')" />
                 <x-input id="name" class="block mt-1 w-full @error('name') is-invalid @enderror" type="text" name="name"
-                        :value="old('name')" autofocus />
+                    :value="old('name')" autofocus />
                 @error('name')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -36,9 +36,9 @@
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('Doc_Ident') is-invalid @enderror"
                     name="Doc_Ident" id="Doc_Ident"> --}}
 
-                <x-label for="Doc_Ident" :value="__('Documento de Identificação')" />
-                    <x-input id="Doc_Ident" class="block mt-1 w-full  @error('Doc_Ident') is-invalid @enderror" type="text"
-                        name="Doc_Ident" :value="old('Doc_Ident')" />
+                <x-label for="Doc_Ident" :value="__('Documento de Identificação *')" />
+                <x-input id="Doc_Ident" class="block mt-1 w-full  @error('Doc_Ident') is-invalid @enderror" type="text"
+                    name="Doc_Ident" :value="old('Doc_Ident')" />
                 @error('Doc_Ident')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -46,11 +46,11 @@
 
             <!-- CPF -->
             <div class="mt-4">
-                <x-label for="CPF" :value="__('CPF')" />
+                <x-label for="CPF" :value="__('CPF *')" />
 
                 <x-input oninput="mascara(this, 'cpf')" id="CPF"
                     class="block mt-1 w-full  @error('CPF') is-invalid @enderror" type="text" name="CPF"
-                    :value="old('CPF')" />
+                    :value="old('CPF')" /><span class="text-danger fw-bold" id="resposta"></span>
                 @error('CPF')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -100,7 +100,7 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Senha (Mínimo de 8 caracteres)')" />
+                <x-label for="password" :value="__('Senha * (Mínimo de 8 caracteres)')" />
 
                 <x-input id="password" class="block mt-1 w-full @error('password') is-invalid @enderror" type="password"
                     name="password" autocomplete="new-password" :value="old('password')" />
@@ -108,7 +108,7 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirmar Senha')" />
+                <x-label for="password_confirmation" :value="__('Confirmar Senha *')" />
 
                 <x-input id="password" class="block mt-1 w-full @error('password') is-invalid @enderror" type="password"
                     name="password_confirmation" autocomplete="current-password" :value="old('password')" />
@@ -197,7 +197,7 @@
                     <option value="Piauí">Piauí</option>
                     <option value="Rio de Janeiro">Rio de Janeiro</option>
                     <option value="Rio Grande do Norte">Rio Grande do Norte</option>
-                    <option value="Rio Grande do  Sul">Rio Grande do  Sul</option>
+                    <option value="Rio Grande do  Sul">Rio Grande do Sul</option>
                     <option value="Rondônia">Rondônia</option>
                     <option value="Santa Catarina">Santa Catarina</option>
                     <option value="São Paulo">São Paulo</option>
@@ -218,13 +218,16 @@
                     {{ __('Já possui conta?') }}
                 </a> --}}
 
-                <x-button class="ml-4">
+                <x-button id="registrar" class="ml-4">
                     {{ __('Registrar') }}
                 </x-button>
             </div>
         </form>
     </x-auth-card>
 </x-guest-layout>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
 {{-- Função para colocar máscara no input --}}
 <script>
@@ -267,5 +270,119 @@
             if (v.length == 5) i.value += "-";
         }
 
+    }
+
+    function CPF() {
+        "user_strict";
+
+        function r(r) {
+            for (var t = null, n = 0; 9 > n; ++n) t += r.toString().charAt(n) * (10 - n);
+            var i = t % 11;
+            return i = 2 > i ? 0 : 11 - i
+        }
+
+        function t(r) {
+            for (var t = null, n = 0; 10 > n; ++n) t += r.toString().charAt(n) * (11 - n);
+            var i = t % 11;
+            return i = 2 > i ? 0 : 11 - i
+        }
+        var n = "CPF Inválido",
+            i = "CPF Válido";
+        this.gera = function() {
+            for (var n = "", i = 0; 9 > i; ++i) n += Math.floor(9 * Math.random()) + "";
+            var o = r(n),
+                a = n + "-" + o + t(n + "" + o);
+            return a
+        }, this.valida = function(o) {
+            for (var a = o.replace(/\D/g, ""), u = a.substring(0, 9), f = a.substring(9, 11), v = 0; 10 > v; v++)
+                if ("" + u + f == "" + v + v + v + v + v + v + v + v + v + v + v) return n;
+            var c = r(u),
+                e = t(u + "" + c);
+            return f.toString() === c.toString() + e.toString() ? i : n
+        }
+    }
+
+    var CPF = new CPF();
+
+    $("#CPF").keypress(function() {
+        $("#resposta").html(CPF.valida($(this).val()));
+        enableDisableButton(resposta);
+    });
+
+    $("#CPF").blur(function() {
+        $("#resposta").html(CPF.valida($(this).val()));
+        enableDisableButton(resposta);
+    });
+
+    $("#CPF").keyup(function() {
+        $("#resposta").html(CPF.valida($(this).val()));
+        enableDisableButton(resposta);
+    });
+
+
+    // document.getElementById("registrar").disabled = true;
+
+    window.onload = initPage();
+
+
+    function initPage() {
+        var resposta = document.getElementById("resposta");
+
+        if (resposta.innerHTML != "CPF Válido") {
+            resposta.classList.replace('text-success', 'text-danger');
+            document.getElementById("registrar").disabled = true;
+        }
+
+        $("#CPF").keypress(function() {
+            $("#resposta").html(CPF.valida($(this).val()));
+            enableDisableButton(resposta);
+        });
+
+        $("#CPF").blur(function() {
+            $("#resposta").html(CPF.valida($(this).val()));
+            enableDisableButton(resposta);
+        });
+
+        $("#CPF").keyup(function() {
+            $("#resposta").html(CPF.valida($(this).val()));
+            enableDisableButton(resposta);
+        });
+    }
+
+
+    // Função para habilitar ou desabilitar botão de registro
+    function enableDisableButton(resposta) {
+
+        if (resposta.innerHTML != "CPF Válido") {
+            resposta.classList.replace('text-success', 'text-danger');
+            document.getElementById("registrar").disabled = true;
+        } else {
+            resposta.classList.replace('text-danger', 'text-success');
+            document.getElementById("registrar").disabled = false;
+        }
+    }
+
+    let nome = document.getElementById("name");
+    let doc_ident = document.getElementById("Doc_Ident");
+    let cp = document.getElementById("CPF");
+
+
+    function habilitarDesabilitar() {
+
+        if (nome.value.length < 6 || doc_ident.value.length < 6) {
+            document.getElementById("registrar").disabled = true;
+        } else {
+            document.getElementById("registrar").disabled = false;
+            enableDisableButton(resposta);
+        }
+    }
+    nome.onblur = function() {
+        habilitarDesabilitar();
+    }
+    doc_ident.onblur = function() {
+        habilitarDesabilitar();
+    }
+    cp.onblur = function() {
+        habilitarDesabilitar();
     }
 </script>

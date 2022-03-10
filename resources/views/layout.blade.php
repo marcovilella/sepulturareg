@@ -30,6 +30,27 @@
             font-weight: 200;
         }
 
+        /* Classes  novas início */
+        .bg-prm {
+            background-color: #1780bc;
+            color: white;
+        }
+
+        .btn-prm {
+            background-color: #1780bc;
+            color: white;
+        }
+        .btn-prm:hover {
+            background-color: #4191c0;
+            color: white;
+        }
+
+        .btn-dashboard {
+            min-width: 334px;
+        }
+        strong { font-weight: bold; }
+        /* Classes novas fim */
+
         a {
             background-color: transparent
         }
@@ -402,28 +423,6 @@
                 color: #6b7280;
                 color: rgba(107, 114, 128, var(--tw-text-opacity))
             }
-        }
-
-    </style>
-
-    <style>
-        body {
-            font-family: 'Open', sans-serif;
-            font-weight: 200;
-        }
-
-        .bg-prm {
-            background-color: #1780bc;
-            color: white;
-        }
-
-        .btn-prm {
-            background-color: #1780bc;
-            color: white;
-        }
-        .btn-prm:hover {
-            background-color: #4191c0;
-            color: white;
         }
 
     </style>

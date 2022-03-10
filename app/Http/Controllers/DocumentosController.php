@@ -5,11 +5,52 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Documento;
 use App\Models\User;
-
-use Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route;
+use Auth;
+
 class DocumentosController extends Controller
 {
+    public function completos()
+    {
+        $rota = Route::getCurrentRoute()->getName();
+
+        $usuarios = User::all();
+
+        $i = 0;
+
+        foreach ($usuarios as $usuario) {
+
+            $usuario->documentos->where('user_id', $usuario->id);
+
+            if ($usuario->documentos->count() == 7) {
+                $completos[$i] = $usuario;
+                $i++;
+            }
+        }
+
+        return view('dashboard', ['usuarios' => $completos, 'rota' => $rota]);
+    }
+
+    public function incompletos()
+    {
+        $rota = Route::getCurrentRoute()->getName();
+
+        $usuarios = User::all();
+
+        $i = 0;
+
+        foreach ($usuarios as $usuario) {
+            $usuario->documentos->where('user_id', $usuario->id);
+            if ($usuario->documentos->count() < 7) {
+
+                $incompletos[$i] = $usuario;
+                $i++;
+            }
+        }
+
+        return view('dashboard', ['usuarios' => $incompletos, 'rota' => $rota]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +58,8 @@ class DocumentosController extends Controller
      */
     public function index()
     {
+        $rota = Route::getCurrentRoute()->getName();
+
         $usuarios = User::all();
 
         foreach ($usuarios as $usuario) {
@@ -24,7 +67,7 @@ class DocumentosController extends Controller
         }
         // return $usuarios;
 
-        return view('dashboard', ['usuarios' => $usuarios]);
+        return view('dashboard', ['usuarios' => $usuarios, 'rota' => $rota]);
     }
 
     /**
@@ -36,7 +79,7 @@ class DocumentosController extends Controller
     {
         // Pegando o id do usuário logado
         $idUsuario = Auth::user()->id;
-        
+
         // Verificando se existe algum documento vinculado à aquele usuário
         if (Documento::where('user_id', $idUsuario)->exists()) {
 
@@ -45,7 +88,7 @@ class DocumentosController extends Controller
 
             // Para cada documento se ele não estiver vazio são inseridos os valores neles
             foreach ($documentos as $documento) {
-                if ($documento->where('tipo_doc', 1, )->where('user_id', $idUsuario)->exists()) {
+                if ($documento->where('tipo_doc', 1,)->where('user_id', $idUsuario)->exists()) {
                     $identidadeFrente = $documento->where('tipo_doc', 1)->where('user_id', $idUsuario)->get();
                     $identidadeFrente = $identidadeFrente[0];
                 } else {
@@ -58,7 +101,7 @@ class DocumentosController extends Controller
                     $identidadeVerso = null;
                 }
                 if ($documento->where('tipo_doc', 3)->where('user_id', $idUsuario)->where('user_id', $idUsuario)->exists()) {
-                    $cpf = $documento->where('tipo_doc', 3)->get();
+                    $cpf = $documento->where('tipo_doc', 3)->where('user_id', $idUsuario)->get();
                     $cpf = $cpf[0];
                 } else {
                     $cpf = null;
@@ -89,6 +132,7 @@ class DocumentosController extends Controller
                 }
             }
         } else {
+            $documentos = null;
             $identidadeFrente = null;
             $identidadeVerso = null;
             $cpf = null;
@@ -100,6 +144,7 @@ class DocumentosController extends Controller
         return view(
             'documentos',
             [
+                'documentos' => $documentos,
                 'Doc_Ident_Frente' => $identidadeFrente,
                 'Doc_Ident_Verso' => $identidadeVerso,
                 'cpf' => $cpf,
@@ -403,6 +448,18 @@ class DocumentosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Buscando o documento com o Id Recebido
+        $documento = Documento::find($id);
+
+        // Usando isso para remover o Storage do caminho da imagem
+        $nome =  substr($documento->imagem, 8);
+
+        // Aqui a gente defina que está buscando a pasta public dentro de storage
+        // O resto do caminho e o nome da imagem estão na variável nome
+        Storage::disk('public')->delete($nome);
+
+        $documento->delete();
+
+        return redirect('documentos');
     }
 }

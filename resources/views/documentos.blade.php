@@ -25,7 +25,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                            this.closest('form').submit();">
+                                                                                                                                                                                                                                            this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -37,47 +37,345 @@
         </div>
     </nav>
 
+    {{-- Div para visualizar e ou remover imagens cadastradas --}}
+    <div class="col-12 mt-2">
+        <div class="col-xl-5 p-5 mx-auto">
+            @if ($documentos)
+                @foreach ($documentos->sortBy('tipo_doc') as $documento)
+                    <div class="text-center">
+                        <a class="btn" data-bs-toggle="modal"
+                            data-bs-target="#documento{{ $documento->id }}_Modal">
+                            {{ $documento->nome }} <br>
+                            <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
+                                style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
+                                alt="...">
+                        </a>
+                        <br>
+                        <a class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#delete{{ $documento->id }}_Modal">Excluir Documento</a>
+                    </div>
+
+                    <!-- Modal Imagem -->
+                    <div class="modal fade" id="documento{{ $documento->id }}_Modal" tabindex="-1"
+                        aria-labelledby="FrenteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="termosUsoLabel">
+                                        {{ $documento->nome }}</h5>
+                                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body mx-auto">
+                                    <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
+                                        class="img-fluid mx-auto" alt="...">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Delete -->
+                    <div class="modal fade" id="delete{{ $documento->id }}_Modal" tabindex="-1"
+                        aria-labelledby="FrenteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="termosUsoLabel">
+                                        Excluir {{ $documento->nome }}</h5>
+                                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body mx-auto">
+                                    Tem certeza que deseja excluir: {{ $documento->nome }}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancelar</button>
+                                    <form action="/documento-delete/{{ $documento->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Excluir Documento</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+            {{-- @if ($Doc_Ident_Frente)
+                <div class="text-center">
+                    <a class="btn" data-bs-toggle="modal" data-bs-target="#Doc_Ident_Frente_Modal">
+                        Documento de Identificação Frente <br>
+                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Frente->imagem }}"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail" alt="...">
+                    </a>
+                    <br>
+                    <form action="/documento-delete/{{ $Doc_Ident_Frente->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover Imagem</button>
+                    </form>
+                </div>
+
+                <!-- Modal Identidade Frente -->
+                <div class="modal fade" id="Doc_Ident_Frente_Modal" tabindex="-1" aria-labelledby="FrenteModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="termosUsoLabel">{{ $Doc_Ident_Frente->nome }}</h5>
+                                <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Frente->imagem }}"
+                                    class="img-fluid mx-auto" alt="...">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($Doc_Ident_Verso)
+                <div class="text-center">
+                    <a class="btn" data-bs-toggle="modal" data-bs-target="#Doc_Ident_Verso_Modal">
+                        Documento de Identificação Verso <br>
+                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Verso->imagem }}"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail" alt="...">
+                    </a>
+                    <br>
+                    <form action="/documento-delete/{{ $Doc_Ident_Verso->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover Imagem</button>
+                    </form>
+
+                    <!-- Modal Identidade Verso -->
+                    <div class="modal fade" id="Doc_Ident_Verso_Modal" tabindex="-1" aria-labelledby="VersoModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="termosUsoLabel">{{ $Doc_Ident_Verso->nome }}</h5>
+                                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body mx-auto">
+                                    <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Verso->imagem }}"
+                                        class="img-fluid mx-auto" alt="...">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($cpf)
+                <div class="text-center">
+                    <a class="btn" data-bs-toggle="modal" data-bs-target="#cpf_Modal">
+                        CPF <br>
+                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $cpf->imagem }}"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail" alt="...">
+                    </a>
+                    <br>
+                    <form action="/documento-delete/{{ $cpf->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover Imagem</button>
+                    </form>
+                </div>
+                <!-- Modal CPF -->
+                <div class="modal fade" id="cpf_Modal" tabindex="-1" aria-labelledby="cpfModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="termosUsoLabel">{{ $cpf->nome }}</h5>
+                                <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $cpf->imagem }}"
+                                    class="img-fluid mx-auto" alt="...">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($comprovante_endereco)
+                <div class="text-center">
+                    <a class="btn" data-bs-toggle="modal" data-bs-target="#comprovante_endereco_Modal">
+                        Comprovante de Endereço <br>
+                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_endereco->imagem }}"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
+                            alt="{{ $comprovante_endereco->nome }}">
+                    </a>
+                    <br>
+                    <form action="/documento-delete/{{ $comprovante_endereco->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover Imagem</button>
+                    </form>
+                </div>
+                <!-- Modal Comprovante de endereço -->
+                <div class="modal fade" id="comprovante_endereco_Modal" tabindex="-1"
+                    aria-labelledby="comprovanteEnderecoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="termosUsoLabel">{{ $comprovante_endereco->nome }}
+                                </h5>
+                                <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_endereco->imagem }}"
+                                    class="img-fluid mx-auto" alt="...">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($comprovante_titularidade_jazigo)
+                <div class="text-center">
+                    <a class="btn" data-bs-toggle="modal"
+                        data-bs-target="#comprovante_titularidade_jazigo_Modal">
+                        Comprovante de Titularidade de Jazigo <br>
+                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_titularidade_jazigo->imagem }}"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail" alt="...">
+                    </a>
+                    <br>
+                    <form action="/documento-delete/{{ $comprovante_titularidade_jazigo->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover Imagem</button>
+                    </form>
+                </div>
+                <!-- Modal Comprovante de Titularidade ou Jazigo -->
+                <div class="modal fade" id="comprovante_titularidade_jazigo_Modal" tabindex="-1"
+                    aria-labelledby="comprovanteTitularidadeJazigoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="termosUsoLabel">
+                                    {{ $comprovante_titularidade_jazigo->nome }}</h5>
+                                <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_titularidade_jazigo->imagem }}"
+                                    class="img-fluid mx-auto" alt="...">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($certidao_obito)
+                <div class="text-center">
+                    <a class="btn" data-bs-toggle="modal" data-bs-target="#certidao_obito_Modal">
+                        Certidão de Óbito do Último Sepultado <br>
+                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $certidao_obito->imagem }}"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail" alt="...">
+                    </a>
+                    <br>
+                    <form action="/documento-delete/{{ $certidao_obito->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover Imagem</button>
+                    </form>
+                </div>
+                <!-- Modal Certidão de Óbito -->
+                <div class="modal fade" id="certidao_obito_Modal" tabindex="-1"
+                    aria-labelledby="certidaoObitoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="termosUsoLabel">{{ $certidao_obito->nome }}</h5>
+                                <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $certidao_obito->imagem }}"
+                                    class="img-fluid mx-auto" alt="...">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($inventario_formal_partilha)
+                <div class="text-center">
+                    <a class="btn" data-bs-toggle="modal" data-bs-target="#inventario_formal_partilha_Modal">
+                        Inventário ou Formal de Partilha <br>
+                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $inventario_formal_partilha->imagem }}"
+                            style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
+                            alt="...">
+                    </a>
+                    <br>
+                    <form action="/documento-delete/{{ $inventario_formal_partilha->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover Imagem</button>
+                    </form>
+                </div>
+                <!-- Modal Inventário Formal ou Partilha -->
+                <div class="modal fade" id="inventario_formal_partilha_Modal" tabindex="-1"
+                    aria-labelledby="inventarioFormalPartilhaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="termosUsoLabel">
+                                    {{ $inventario_formal_partilha->nome }}</h5>
+                                <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $inventario_formal_partilha->imagem }}"
+                                    class="img-fluid mx-auto" alt="...">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif --}}
+        </div>
+    </div>
+
+    {{-- Form para adicionar os documentos --}}
     <form action="/upload" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="col-12 mt-5">
-            <div class="col-xl-5 p-5 mx-auto">
+        <div class="col-12 mt-2">
+            <div class="col-xl-5 mx-auto">
                 <div class="mb-3">
                     @if (!$Doc_Ident_Frente)
                         <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente <a
                                 class="text-danger"><b>Pendente</b></a></label>
                         <input class="form-control" type="file" name="Doc_Ident_Frente" id="Doc_Ident_Frente">
-                    @else
-                        <div class="text-center">
-                            <a class="btn" data-bs-toggle="modal" data-bs-target="#Doc_Ident_Frente_Modal">
-                                Documento de Identificação Frente <br>
-                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Frente->imagem }}"
-                                    style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                    alt="...">
-                            </a>
-                            <br>
-                            <a class="btn btn-danger">Remover Imagem</a>
-                        </div>
-                        <!-- Modal Identidade Frente -->
-                        <div class="modal fade" id="Doc_Ident_Frente_Modal" tabindex="-1"
-                            aria-labelledby="FrenteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="termosUsoLabel">{{ $Doc_Ident_Frente->nome }}</h5>
-                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body mx-auto">
-                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Frente->imagem }}"
-                                            class="img-fluid mx-auto" alt="...">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @endif
                 </div>
                 <div class="mb-3">
@@ -85,77 +383,13 @@
                         <label for="Doc_Ident_Verso" class="form-label">Documento de Identificação Verso <a
                                 class="text-danger"><b>Pendente</b></a></label>
                         <input class="form-control" type="file" name="Doc_Ident_Verso" id="Doc_Ident_Verso">
-                    @else
-                        <div class="text-center">
-                            <a class="btn" data-bs-toggle="modal" data-bs-target="#Doc_Ident_Verso_Modal">
-                                Documento de Identificação Verso <br>
-                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Verso->imagem }}"
-                                    style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                    alt="...">
-                            </a>
-                            <br>
-                            <a class="btn btn-danger">Remover Imagem</a>
-                        </div>
-
-                        <!-- Modal Identidade Verso -->
-                        <div class="modal fade" id="Doc_Ident_Verso_Modal" tabindex="-1"
-                            aria-labelledby="VersoModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="termosUsoLabel">{{ $Doc_Ident_Verso->nome }}</h5>
-                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body mx-auto">
-                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $Doc_Ident_Verso->imagem }}"
-                                            class="img-fluid mx-auto" alt="...">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
+                @endif
+                {{-- </div> --}}
                 <div class="mb-3">
                     @if (!$cpf)
                         <label for="cpf" class="form-label">CPF <a class="text-danger"><b>Pendente</b></a></label>
                         <input class="form-control" type="file" name="cpf" id="cpf">
-                    @else
-                        <div class="text-center">
-                            <a class="btn" data-bs-toggle="modal" data-bs-target="#cpf_Modal">
-                                CPF <br>
-                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $cpf->imagem }}"
-                                    style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                    alt="...">
-                            </a>
-                            <br>
-                            <a class="btn btn-danger">Remover Imagem</a>
-                        </div>
-                        <!-- Modal CPF -->
-                        <div class="modal fade" id="cpf_Modal" tabindex="-1" aria-labelledby="cpfModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="termosUsoLabel">{{ $cpf->nome }}</h5>
-                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body mx-auto">
-                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $cpf->imagem }}"
-                                            class="img-fluid mx-auto" alt="...">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @endif
                 </div>
                 <div class="mb-3">
@@ -163,39 +397,6 @@
                         <label for="comprovante_endereco" class="form-label">Comprovante de Endereço <a
                                 class="text-danger"><b>Pendente</b></a></label>
                         <input class="form-control" type="file" name="comprovante_endereco" id="comprovante_endereco">
-                    @else
-                        <div class="text-center">
-                            <a class="btn" data-bs-toggle="modal" data-bs-target="#comprovante_endereco_Modal">
-                                Comprovante de Endereço <br>
-                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_endereco->imagem }}"
-                                    style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                    alt="{{ $comprovante_endereco->nome }}">
-                            </a>
-                            <br>
-                            <a class="btn btn-danger">Remover Imagem</a>
-                        </div>
-                        <!-- Modal Comprovante de endereço -->
-                        <div class="modal fade" id="comprovante_endereco_Modal" tabindex="-1"
-                            aria-labelledby="comprovanteEnderecoModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="termosUsoLabel">{{ $comprovante_endereco->nome }}
-                                        </h5>
-                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body mx-auto">
-                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_endereco->imagem }}"
-                                            class="img-fluid mx-auto" alt="...">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @endif
                 </div>
                 <div class="mb-3">
@@ -204,40 +405,6 @@
                             Jazigo <a class="text-danger"><b>Pendente</b></a></label>
                         <input class="form-control" type="file" name="comprovante_titularidade_jazigo"
                             id="comprovante_titularidade_jazigo">
-                    @else
-                        <div class="text-center">
-                            <a class="btn" data-bs-toggle="modal"
-                                data-bs-target="#comprovante_titularidade_jazigo_Modal">
-                                Comprovante de Titularidade de Jazigo <br>
-                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_titularidade_jazigo->imagem }}"
-                                    style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                    alt="...">
-                            </a>
-                            <br>
-                            <a class="btn btn-danger">Remover Imagem</a>
-                        </div>
-                        <!-- Modal Comprovante de Titularidade ou Jazigo -->
-                        <div class="modal fade" id="comprovante_titularidade_jazigo_Modal" tabindex="-1"
-                            aria-labelledby="comprovanteTitularidadeJazigoModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="termosUsoLabel">
-                                            {{ $comprovante_titularidade_jazigo->nome }}</h5>
-                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body mx-auto">
-                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $comprovante_titularidade_jazigo->imagem }}"
-                                            class="img-fluid mx-auto" alt="...">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @endif
                 </div>
                 <div class="mb-3">
@@ -245,38 +412,6 @@
                         <label for="certidao_obito" class="form-label">Certidão de Óbito do Último Sepultado <a
                                 class="text-danger"><b>Pendente</b></a></label>
                         <input class="form-control" type="file" name="certidao_obito" id="certidao_obito">
-                    @else
-                        <div class="text-center">
-                            <a class="btn" data-bs-toggle="modal" data-bs-target="#certidao_obito_Modal">
-                                Certidão de Óbito do Último Sepultado <br>
-                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $certidao_obito->imagem }}"
-                                    style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                    alt="...">
-                            </a>
-                            <br>
-                            <a class="btn btn-danger">Remover Imagem</a>
-                        </div>
-                        <!-- Modal Certidão de Óbito -->
-                        <div class="modal fade" id="certidao_obito_Modal" tabindex="-1"
-                            aria-labelledby="certidaoObitoModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="termosUsoLabel">{{ $certidao_obito->nome }}</h5>
-                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body mx-auto">
-                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $certidao_obito->imagem }}"
-                                            class="img-fluid mx-auto" alt="...">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @endif
                 </div>
                 <div class="mb-3">
@@ -287,45 +422,11 @@
                                 class="text-danger"><b>Pendente</b></a></label>
                         <input class="form-control" type="file" name="inventario_formal_partilha"
                             id="inventario_formal_partilha">
-                    @else
-                        <div class="text-center">
-                            <a class="btn" data-bs-toggle="modal"
-                                data-bs-target="#inventario_formal_partilha_Modal">
-                                Inventário ou Formal de Partilha <br>
-                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $inventario_formal_partilha->imagem }}"
-                                    style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                    alt="...">
-                            </a>
-                            <br>
-                            <a class="btn btn-danger">Remover Imagem</a>
-                        </div>
-                        <!-- Modal Inventário Formal ou Partilha -->
-                        <div class="modal fade" id="inventario_formal_partilha_Modal" tabindex="-1"
-                            aria-labelledby="inventarioFormalPartilhaModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="termosUsoLabel">
-                                            {{ $inventario_formal_partilha->nome }}</h5>
-                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body mx-auto">
-                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $inventario_formal_partilha->imagem }}"
-                                            class="img-fluid mx-auto" alt="...">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @endif
                 </div>
                 @if (!$Doc_Ident_Frente || !$Doc_Ident_Verso || !$cpf || !$comprovante_endereco || !$comprovante_titularidade_jazigo || !$certidao_obito || !$inventario_formal_partilha)
                     <div class="text-center">
-                        <button type="submit" class="btn bg-prm">Enviar</button>
+                        <button type="submit" class="btn btn-prm">Enviar</button>
                     </div>
                 @endif
             </div>
