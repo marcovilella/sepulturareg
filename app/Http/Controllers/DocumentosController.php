@@ -15,7 +15,7 @@ class DocumentosController extends Controller
     {
         $rota = Route::getCurrentRoute()->getName();
 
-        $usuarios = User::all();
+        $usuarios = User::all()->where('tipo', 'U');
 
         $i = 0;
 
@@ -36,7 +36,7 @@ class DocumentosController extends Controller
     {
         $rota = Route::getCurrentRoute()->getName();
 
-        $usuarios = User::all();
+        $usuarios = User::all()->where('tipo', 'U');
 
         $i = 0;
 
@@ -60,7 +60,7 @@ class DocumentosController extends Controller
     {
         $rota = Route::getCurrentRoute()->getName();
 
-        $usuarios = User::all();
+        $usuarios = User::all()->where('tipo', 'U');
 
         foreach ($usuarios as $usuario) {
             $usuario->documentos->where('user_id', $usuario->id);

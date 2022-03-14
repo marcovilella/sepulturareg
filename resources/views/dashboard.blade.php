@@ -31,18 +31,21 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="text-white nav-link me-5 dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a href="{{ route('alterar-senha') }}" class="dropdown-item">Alterar Senha</a>
+                            </li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                    this.closest('form').submit();">
+                                                                                                                                                                                                                                                                        this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -56,11 +59,23 @@
 
 
     <div class="col-12 text-center mb-2 mt-4">
-                <a href="dashboard" class="btn btn-prm">Ver Todos</a>
-                <a href="completos" class="btn btn-prm">Ver Completos</a>
-                <a href="incompletos" class="btn btn-prm">Ver Incompletos</a>
-        </div>
-        <div class="col-xl-11 mx-auto">
+        @if (session('success'))
+            <div class="alert alert-success mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+        <a href="dashboard" class="btn btn-prm mb-1">Ver Todos</a>
+        <a href="completos" class="btn btn-prm mb-1">Ver Completos</a>
+        <a href="incompletos" class="btn btn-prm mb-1">Ver Incompletos</a>
+    </div>
+    <div class="col-xl-11 mx-auto">
+        @if (!$usuarios)
+            @if ($rota == 'completos' || $rota == 'incompletos')
+                <h4 class="text-center mt-5">Não foram encontrados usuários {{ $rota }}</h4>
+            @else
+                <h4 class="text-center mt-5">Não foram encontrados usuários</h4>
+            @endif
+        @else
             @forelse ($usuarios as $usuario)
                 <div class="accordion" id="accordionUsuario">
                     <div class="accordion-item">
@@ -426,7 +441,9 @@
                         </div>
                     </div>
                 @empty
+                    Nenhum usuário
             @endforelse
-        </div>
+        @endif
+    </div>
     </div>
 @endsection

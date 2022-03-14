@@ -1,6 +1,6 @@
 @extends('layout')
 @section('secao')
-    <nav class="navbar navbar-expand-lg navbar-light bg-prm">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-prm">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/Marca-PMC-cor.png"
@@ -14,18 +14,21 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="text-white nav-link me-5 dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a href="{{ route('alterar-senha') }}" class="dropdown-item">Alterar Senha</a>
+                            </li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                            this.closest('form').submit();">
+                                                                                                                                                                                                                                                                        this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -39,6 +42,11 @@
 
     {{-- Div para visualizar e ou remover imagens cadastradas --}}
     <div class="col-12 mt-2">
+        @if (session('success'))
+            <div class="alert alert-success mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="col-xl-5 p-5 mx-auto">
             @if ($documentos)
                 @foreach ($documentos->sortBy('tipo_doc') as $documento)
