@@ -28,7 +28,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                        this.closest('form').submit();">
+                                                                                                                                                                                                                                                                            this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -47,7 +47,8 @@
                 {{ session('success') }}
             </div>
         @endif
-        <div class="col-xl-5 p-5 mx-auto">
+        <div class="col-xl-5 mx-auto">
+            <h5><strong>Documentos</strong></h5>
             @if ($documentos)
                 @foreach ($documentos->sortBy('tipo_doc') as $documento)
                     <div class="text-center">
@@ -378,7 +379,7 @@
     <form action="/upload" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-12 mt-2">
-            <div class="col-xl-5 mx-auto">
+            <div class="col-xl-5 p-1 mx-auto">
                 <div class="mb-3">
                     @if (!$Doc_Ident_Frente)
                         <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente <a
@@ -434,10 +435,78 @@
                 </div>
                 @if (!$Doc_Ident_Frente || !$Doc_Ident_Verso || !$cpf || !$comprovante_endereco || !$comprovante_titularidade_jazigo || !$certidao_obito || !$inventario_formal_partilha)
                     <div class="text-center">
-                        <button type="submit" class="btn btn-prm">Enviar</button>
+                        <button type="submit" class="btn btn-prm">Enviar Documento</button>
                     </div>
                 @endif
             </div>
         </div>
     </form>
+
+    <div class="col-12 mt-2">
+        <div class="col-xl-5 row mb-5 mx-auto">
+            <h5><strong>Informações</strong></h5>
+            <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                <label for="fornecedor">Cemitério</label>
+                <input type="text" class="form-control"
+                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
+            </div>
+            <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                <label for="fornecedor">Quadra</label>
+                <input type="text" class="form-control"
+                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
+            </div>
+            <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                <label for="fornecedor">Jazigo</label>
+                <input type="text" class="form-control"
+                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
+            </div>
+            <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 p-1">
+                <label for="fornecedor">Nome do Permissionário *</label>
+                <input type="text" class="form-control  @error('fornecedor') is-invalid @enderror"
+                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
+                @error('fornecedor')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3 col-12 p-1">
+                <label for="permissionario_vivo">O Permissionário é vivo? *</label>
+                <div class="form-check">
+                    <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror" type="radio" name="permissionario_vivo" id="sim_vivo">
+                    <label class="form-check-label" value="Sim" for="sim_vivo">
+                      Sim
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror" type="radio" name="permissionario_vivo" id="nao_vivo">
+                    <label class="form-check-label" value="Não" for="nao_vivo">
+                      Não
+                    </label>
+                  </div>
+                @error('permissionario_vivo')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3 col-12 p-1">
+                <label for="manutencao_permissao_jazigo">Tem Interesse na Manutenção da Permissão do Jazigo? *</label>
+                <div class="form-check">
+                    <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror" type="radio" name="manutencao_permissao_jazigo" id="sim_jazigo">
+                    <label class="form-check-label" value="Sim" for="sim_jazigo">
+                      Sim
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror" type="radio" name="manutencao_permissao_jazigo" id="nao_jazigo">
+                    <label class="form-check-label" value="Não" for="nao_jazigo">
+                      Não
+                    </label>
+                  </div>
+                @error('manutencao_permissao_jazigo')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="text-center">
+                <button class="btn btn-prm">Salvar Informações</button>
+            </div>
+        </div>
+    </div>
 @endsection

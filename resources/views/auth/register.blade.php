@@ -49,8 +49,8 @@
                 <x-label for="CPF" :value="__('CPF *')" />
 
                 <x-input oninput="mascara(this, 'cpf')" id="CPF"
-                    class="block mt-1 w-full  @error('CPF') is-invalid @enderror" type="text" name="CPF"
-                    :value="old('CPF')" /><span class="text-danger fw-bold" id="resposta"></span>
+                    class="block mt-1 w-full  @error('CPF') is-invalid @enderror" type="text" name="CPF" /><span
+                    class="text-danger fw-bold" id="resposta"></span>
                 @error('CPF')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -58,10 +58,14 @@
 
             <!-- Telefone Celular -->
             <div class="mt-4">
-                <x-label for="celular" :value="__('Tel Celular')" />
+                <x-label for="celular" :value="__('Tel Celular *')" />
 
-                <x-input oninput="mascara(this, 'celular')" id="celular" class="block mt-1 w-full" type="text"
-                    name="celular" :value="old('celular')" />
+                <x-input oninput="mascara(this, 'celular')" id="celular"
+                    class="block mt-1 w-full @error('celular') is-invalid @enderror" type="text" name="celular"
+                    :value="old('celular')" />
+                @error('celular')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Whatsapp / Telegram -->
@@ -124,16 +128,24 @@
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                     name="endereco" id="endereco"> --}}
 
-                <x-label for="endereco" :value="__('Avenida / Rua / Outro')" />
+                <x-label for="endereco" :value="__('Avenida / Rua / Outro *')" />
 
-                <x-input id="endereco" class="block mt-1 w-full" type="text" name="endereco" />
+                <x-input id="endereco" class="block mt-1 w-full @error('endereco') is-invalid @enderror" type="text"
+                    name="endereco" />
+                @error('endereco')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Número -->
             <div class="mt-4">
-                <x-label for="numero" :value="__('Número')" />
+                <x-label for="numero" :value="__('Número *')" />
 
-                <x-input id="numero" class="block mt-1 w-full" type="number" min="0" name="numero" />
+                <x-input id="numero" class="block mt-1 w-full @error('numero') is-invalid @enderror" type="number"
+                    min="0" name="numero" />
+                @error('numero')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Complemento -->
@@ -154,8 +166,12 @@
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                     name="bairro" id="bairro"> --}}
 
-                <x-label for="bairro" :value="__('Bairro')" />
-                <x-input id="bairro" class="block mt-1 w-full" type="text" name="bairro" />
+                <x-label for="bairro" :value="__('Bairro *')" />
+                <x-input id="bairro" class="block mt-1 w-full @error('bairro') is-invalid @enderror" type="text"
+                    name="bairro" />
+                @error('bairro')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Cidade -->
@@ -165,16 +181,20 @@
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                     name="cidade" id="cidade"> --}}
 
-                <x-label for="cidade" :value="__('Cidade')" />
-                <x-input id="cidade" class="block mt-1 w-full" type="text" name="cidade" />
+                <x-label for="cidade" :value="__('Cidade *')" />
+                <x-input id="cidade" class="block mt-1 w-full @error('cidade') is-invalid @enderror" type="text"
+                    name="cidade" />
+                @error('cidade')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Estado -->
             <div class="mt-4">
-                <x-label for="estado" :value="__('Estado / UF')" />
+                <x-label for="estado" :value="__('Estado / UF *')" />
 
-                <select id="estado"
-                    class="block mt-1 w-full form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                <select id="estado" onchange="habilitarDesabilitar()"
+                    class="block mt-1 w-full form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('estado') is-invalid @enderror"
                     type="text" name="estado">
                     <option value="" selected>Selecione</option>
                     <option value="Acre">Acre</option>
@@ -204,13 +224,20 @@
                     <option value="Sergipe">Sergipe</option>
                     <option value="Tocantins">Tocantins</option>
                 </select>
+                @error('estado')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- CEP -->
             <div class="mt-4">
-                <x-label for="cep" :value="__('CEP')" />
+                <x-label for="cep" :value="__('CEP *')" />
 
-                <x-input oninput="mascara(this, 'cep')" id="cep" class="block mt-1 w-full" type="text" name="cep" />
+                <x-input oninput="mascara(this, 'cep')" id="cep"
+                    class="block mt-1 w-full @error('cep') is-invalid @enderror" type="text" name="cep" />
+                @error('cep')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -365,12 +392,26 @@
     let nome = document.getElementById("name");
     let doc_ident = document.getElementById("Doc_Ident");
     let cp = document.getElementById("CPF");
+    let celular = document.getElementById("celular");
+    let endereco = document.getElementById("endereco");
+    let numero = document.getElementById("numero");
+    let bairro = document.getElementById("bairro");
+    let cidade = document.getElementById("cidade");
+    let estado = document.getElementById("estado");
+    
+    let cep = document.getElementById("cep");
 
 
+    var i = 0;
     function habilitarDesabilitar() {
-
-        if (nome.value.length < 6 || doc_ident.value.length < 6) {
+        var opcao = estado.options[estado.selectedIndex];
+        console.log(opcao.value);
+        if (nome.value.length < 6 || doc_ident.value.length < 6 || cp.value.length < 14 || celular.value.length < 15 ||
+            endereco.value.length < 4 || cep.value.length < 8 || numero.value.length < 1 || bairro.value.length < 3 ||
+            cidade.value.length < 3 || bairro.value.length < 3 || opcao.value == "" || cep.value.length < 9) {
             document.getElementById("registrar").disabled = true;
+            console.log(i);
+            i++
         } else {
             document.getElementById("registrar").disabled = false;
             enableDisableButton(resposta);
@@ -383,6 +424,27 @@
         habilitarDesabilitar();
     }
     cp.onblur = function() {
+        habilitarDesabilitar();
+    }
+    celular.onblur = function() {
+        habilitarDesabilitar();
+    }
+    endereco.onblur = function() {
+        habilitarDesabilitar();
+    }
+    numero.onblur = function() {
+        habilitarDesabilitar();
+    }
+    bairro.onblur = function() {
+        habilitarDesabilitar();
+    }
+    cidade.onblur = function() {
+        habilitarDesabilitar();
+    }
+    estado.onblur = function() {
+        habilitarDesabilitar();
+    }
+    cep.onblur = function() {
         habilitarDesabilitar();
     }
 </script>

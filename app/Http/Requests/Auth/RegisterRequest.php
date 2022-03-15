@@ -30,6 +30,13 @@ class RegisterRequest extends FormRequest
             'email' => [ 'nullable', 'email:rfc,dns,strict,spoof,filter' ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'CPF' => [ 'required', 'string', 'min:14', 'unique:users' ],
+            'celular' => ['required'],
+            'endereco' => ['required'],
+            'numero' => ['required'],
+            'bairro' => ['required'],
+            'cidade' => ['required'],
+            'estado' => ['required'],
+            'cep' => ['required'],
         ];
     }
     public function messages()
