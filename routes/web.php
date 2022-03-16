@@ -27,4 +27,10 @@ require __DIR__.'/auth.php';
 
 Route::post('/upload', [DocumentosController::class, 'store']);
 
+Route::post('/salvar-informacoes', [DocumentosController::class, 'salvarInformacoes']);
+
+Route::put('/editar-informacoes/{id}', [DocumentosController::class, 'editarInformacoes']);
+
+Route::get('export', [DocumentosController::class,'export'])->name('export');
+
 Route::delete('documento-delete/{id}', [DocumentosController::class, 'destroy']);

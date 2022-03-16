@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\InformacaoRequest;
 use App\Models\Documento;
 use App\Models\User;
+use App\Models\Informacao;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use Auth;
@@ -16,6 +18,8 @@ class DocumentosController extends Controller
         $rota = Route::getCurrentRoute()->getName();
 
         $usuarios = User::all()->where('tipo', 'U');
+        
+        $completos = null;
 
         $i = 0;
 
@@ -37,6 +41,8 @@ class DocumentosController extends Controller
         $rota = Route::getCurrentRoute()->getName();
 
         $usuarios = User::all()->where('tipo', 'U');
+
+        $incompletos = null;
 
         $i = 0;
 
@@ -70,6 +76,30 @@ class DocumentosController extends Controller
         return view('dashboard', ['usuarios' => $usuarios, 'rota' => $rota]);
     }
 
+    public function export()
+    {
+        $usuarios = User::all()->where('tipo', 'U');
+        // $i = 0;
+
+        foreach ($usuarios as $usuario) {
+            $usuario->documentos->where('user_id', $usuario->id);
+
+            if ($usuario->documentos->where('user_id', $usuario->id)->count() < 7) {
+                // $usuario->documentos[$i] = "Não enviado";
+                $usuario->status = "Incompleto";
+                // $i++;
+            }
+            if ($usuario->documentos->where('user_id', $usuario->id)->count() > 6) {
+                // foreach ($usuario->documentos as $documento) {
+                //     $documento = "Enviado";
+                //     $i++;
+                // }
+                $usuario->status = "Completo";
+            }
+        }
+        return $usuarios;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -79,6 +109,14 @@ class DocumentosController extends Controller
     {
         // Pegando o id do usuário logado
         $idUsuario = Auth::user()->id;
+
+        if (Informacao::where('user_id', $idUsuario)->exists()) {
+            $informacao = Informacao::where('user_id', $idUsuario)->get();
+            $informacao = $informacao[0];
+            // return $informacao;
+        } else {
+            $informacao = null;
+        }
 
         // Verificando se existe algum documento vinculado à aquele usuário
         if (Documento::where('user_id', $idUsuario)->exists()) {
@@ -151,7 +189,8 @@ class DocumentosController extends Controller
                 'comprovante_endereco' => $comprovanteEndereco,
                 'comprovante_titularidade_jazigo' => $comprovanteTitularidadeJazigo,
                 'certidao_obito' => $certidaoObito,
-                'inventario_formal_partilha' => $inventarioFormalPartilha
+                'inventario_formal_partilha' => $inventarioFormalPartilha,
+                'informacao' => $informacao,
             ]
         );
     }
@@ -403,7 +442,35 @@ class DocumentosController extends Controller
 
             return redirect('documentos');
         }
-        echo "Nenhuma imagem";
+    }
+
+    // Função para adicionar informações
+    public function salvarInformacoes(InformacaoRequest $request)
+    {
+        $user_id = Auth::user()->id;
+        // return $user_id;
+
+        $informacao = Informacao::create([
+            'cemiterio' => $request->cemiterio,
+            'quadra' => $request->quadra,
+            'jazigo' => $request->jazigo,
+            'nome_permissionario' => $request->nome_permissionario,
+            'permissionario_vivo' => $request->permissionario_vivo,
+            'manutencao_permissao_jazigo' => $request->manutencao_permissao_jazigo,
+            'user_id' => $user_id,
+        ]);
+
+        return redirect('documentos');
+    }
+
+    // Função para editar informações
+    public function editarInformacoes(InformacaoRequest $request, $id)
+    {
+        $informacao = Informacao::find($id);
+
+        $informacao->update($request->all());
+
+        return redirect('documentos')->with("success", "Informações editadas com sucesso");
     }
 
     /**

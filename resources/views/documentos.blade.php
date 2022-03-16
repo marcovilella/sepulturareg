@@ -28,7 +28,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                            this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                    this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -43,12 +43,12 @@
     {{-- Div para visualizar e ou remover imagens cadastradas --}}
     <div class="col-12 mt-2">
         @if (session('success'))
-            <div class="alert alert-success mb-4">
+            <div class="alert alert-success text-center mb-4">
                 {{ session('success') }}
             </div>
         @endif
         <div class="col-xl-5 mx-auto">
-            <h5><strong>Documentos</strong></h5>
+            <h5 class="text-center"><strong>Documentos</strong></h5>
             @if ($documentos)
                 @foreach ($documentos->sortBy('tipo_doc') as $documento)
                     <div class="text-center">
@@ -442,71 +442,175 @@
         </div>
     </form>
 
-    <div class="col-12 mt-2">
-        <div class="col-xl-5 row mb-5 mx-auto">
-            <h5><strong>Informações</strong></h5>
-            <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
-                <label for="fornecedor">Cemitério</label>
-                <input type="text" class="form-control"
-                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
+    {{-- Se o usuário não tem nenhuma informação cadastrada aparece o form para cadastrar informações --}}
+    @if (!$informacao)
+        <form action="salvar-informacoes" method="post">
+            @csrf
+            <div class="col-12 mt-2">
+                <div class="col-xl-5 mb-5 mx-auto">
+                    <h5 class="text-center"><strong>Informações</strong></h5>
+                    <div class="row">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="cemiterio">Cemitério</label>
+                            <input type="text" class="form-control" value="{{ old('cemiterio') }}" name="cemiterio"
+                                id="cemiterio">
+                        </div>
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="quadra">Quadra</label>
+                            <input type="text" class="form-control" value="{{ old('quadra') }}" name="quadra"
+                                id="quadra">
+                        </div>
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="jazigo">Jazigo</label>
+                            <input type="text" class="form-control" value="{{ old('jazigo') }}" name="jazigo"
+                                id="jazigo">
+                        </div>
+                        <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="nome_permissionario">Nome do Permissionário *</label>
+                            <input type="text" class="form-control  @error('nome_permissionario') is-invalid @enderror"
+                                value="{{ old('nome_permissionario') }}" name="nome_permissionario"
+                                id="nome_permissionario">
+                            @error('nome_permissionario')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col-12 p-1">
+                            <label for="permissionario_vivo">O Permissionário é vivo? *</label>
+                            <div class="form-check">
+                                <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror"
+                                    type="radio" name="permissionario_vivo" value="Sim" id="sim_vivo">
+                                <label class="form-check-label" for="sim_vivo">
+                                    Sim
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror"
+                                    type="radio" name="permissionario_vivo" value="Não" id="nao_vivo">
+                                <label class="form-check-label" for="nao_vivo">
+                                    Não
+                                </label>
+                            </div>
+                            @error('permissionario_vivo')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col-12 p-1">
+                            <label for="manutencao_permissao_jazigo">Tem Interesse na Manutenção da Permissão do Jazigo?
+                                *</label>
+                            <div class="form-check">
+                                <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror"
+                                    type="radio" name="manutencao_permissao_jazigo" value="Sim" id="sim_jazigo">
+                                <label class="form-check-label" for="sim_jazigo">
+                                    Sim
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror"
+                                    type="radio" name="manutencao_permissao_jazigo" value="Não" id="nao_jazigo">
+                                <label class="form-check-label" for="nao_jazigo">
+                                    Não
+                                </label>
+                            </div>
+                            @error('manutencao_permissao_jazigo')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-prm">Salvar Informações</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
-                <label for="fornecedor">Quadra</label>
-                <input type="text" class="form-control"
-                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
-            </div>
-            <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
-                <label for="fornecedor">Jazigo</label>
-                <input type="text" class="form-control"
-                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
-            </div>
-            <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 p-1">
-                <label for="fornecedor">Nome do Permissionário *</label>
-                <input type="text" class="form-control  @error('fornecedor') is-invalid @enderror"
-                    value="{{ old('fornecedor') }}" name="fornecedor" id="fornecedor">
-                @error('fornecedor')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3 col-12 p-1">
-                <label for="permissionario_vivo">O Permissionário é vivo? *</label>
-                <div class="form-check">
-                    <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror" type="radio" name="permissionario_vivo" id="sim_vivo">
-                    <label class="form-check-label" value="Sim" for="sim_vivo">
-                      Sim
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror" type="radio" name="permissionario_vivo" id="nao_vivo">
-                    <label class="form-check-label" value="Não" for="nao_vivo">
-                      Não
-                    </label>
-                  </div>
-                @error('permissionario_vivo')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3 col-12 p-1">
-                <label for="manutencao_permissao_jazigo">Tem Interesse na Manutenção da Permissão do Jazigo? *</label>
-                <div class="form-check">
-                    <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror" type="radio" name="manutencao_permissao_jazigo" id="sim_jazigo">
-                    <label class="form-check-label" value="Sim" for="sim_jazigo">
-                      Sim
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror" type="radio" name="manutencao_permissao_jazigo" id="nao_jazigo">
-                    <label class="form-check-label" value="Não" for="nao_jazigo">
-                      Não
-                    </label>
-                  </div>
-                @error('manutencao_permissao_jazigo')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="text-center">
-                <button class="btn btn-prm">Salvar Informações</button>
+        </form>
+
+    {{-- Se o usuário tiver alguma informação cadastrada aparece o form para edição --}}
+    @else
+        <div class="col-12 mt-2">
+            <div class="col-xl-5 mb-5 mx-auto">
+                <h5 class="text-center"><strong>Informações</strong></h5>
+                <form action="/editar-informacoes/{{ $informacao->id }}" method="POST">
+                    @method("PUT")
+                    @csrf
+                    <div class="row p-1">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="cemiterio">Cemitério</label>
+                            <input type="text" class="form-control" value="{{ $informacao->cemiterio }}"
+                                name="cemiterio" id="cemiterio">
+                        </div>
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="quadra">Quadra</label>
+                            <input type="text" class="form-control" value="{{ $informacao->quadra }}" name="quadra"
+                                id="quadra">
+                        </div>
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="jazigo">Jazigo</label>
+                            <input type="text" class="form-control" value="{{ $informacao->jazigo }}" name="jazigo"
+                                id="jazigo">
+                        </div>
+                        <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 p-1">
+                            <label for="nome_permissionario">Nome do Permissionário *</label>
+                            <input type="text" class="form-control  @error('nome_permissionario') is-invalid @enderror"
+                                value="{{ $informacao->nome_permissionario }}" name="nome_permissionario"
+                                id="nome_permissionario">
+                            @error('nome_permissionario')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col-12 p-1">
+                            <label for="permissionario_vivo">O Permissionário é vivo? *</label>
+                            <div class="form-check">
+                                <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror"
+                                    type="radio" name="permissionario_vivo"
+                                    {{ $informacao->permissionario_vivo == 'Sim' ? 'checked' : '' }} value="Sim"
+                                    id="sim_vivo">
+                                <label class="form-check-label" for="sim_vivo">
+                                    Sim
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror"
+                                    type="radio" name="permissionario_vivo"
+                                    {{ $informacao->permissionario_vivo == 'Não' ? 'checked' : '' }} value="Não"
+                                    id="nao_vivo">
+                                <label class="form-check-label" for="nao_vivo">
+                                    Não
+                                </label>
+                            </div>
+                            @error('permissionario_vivo')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col-12 p-1">
+                            <label for="manutencao_permissao_jazigo">Tem Interesse na Manutenção da Permissão do Jazigo?
+                                *</label>
+                            <div class="form-check">
+                                <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror"
+                                    type="radio" name="manutencao_permissao_jazigo"
+                                    {{ $informacao->manutencao_permissao_jazigo == 'Sim' ? 'checked' : '' }} value="Sim"
+                                    id="sim_jazigo">
+                                <label class="form-check-label" for="sim_jazigo">
+                                    Sim
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input @error('manutencao_permissao_jazigo') is-invalid @enderror"
+                                    type="radio" name="manutencao_permissao_jazigo"
+                                    {{ $informacao->manutencao_permissao_jazigo == 'Não' ? 'checked' : '' }} value="Não"
+                                    id="nao_jazigo">
+                                <label class="form-check-label" for="nao_jazigo">
+                                    Não
+                                </label>
+                            </div>
+                            @error('manutencao_permissao_jazigo')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-prm">Editar Informações</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
