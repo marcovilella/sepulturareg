@@ -10,12 +10,20 @@ use App\Models\Informacao;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use Auth;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentosController extends Controller
 {
     // Função para exibir apenas os usuários completos
     public function completos()
     {
+        $tipoUsuario = Auth::user()->tipo;
+
+        if ($tipoUsuario != "A") {
+            return redirect('documentos');
+        }
+
         $rota = Route::getCurrentRoute()->getName();
 
         $usuarios = User::all()->where('tipo', 'U');
@@ -47,6 +55,12 @@ class DocumentosController extends Controller
     // Função para exibir apenas os usuários incompletos
     public function incompletos()
     {
+        $tipoUsuario = Auth::user()->tipo;
+
+        if ($tipoUsuario != "A") {
+            return redirect('documentos');
+        }
+
         $rota = Route::getCurrentRoute()->getName();
 
         $usuarios = User::all()->where('tipo', 'U');
@@ -78,6 +92,12 @@ class DocumentosController extends Controller
      */
     public function index()
     {
+        $tipoUsuario = Auth::user()->tipo;
+
+        if ($tipoUsuario != "A") {
+            return redirect('documentos');
+        }
+
         $rota = Route::getCurrentRoute()->getName();
 
         $usuarios = User::all()->where('tipo', 'U');
@@ -92,33 +112,13 @@ class DocumentosController extends Controller
                 $usuario->informacoes->where('user_id', $usuario->id);
             }
         }
-        // return $usuarios;
 
         return view('dashboard', ['usuarios' => $usuarios, 'rota' => $rota]);
     }
 
     public function export()
     {
-        $usuarios = User::all()->where('tipo', 'U');
-        // $i = 0;
-
-        foreach ($usuarios as $usuario) {
-            $usuario->documentos->where('user_id', $usuario->id);
-
-            if ($usuario->documentos->where('user_id', $usuario->id)->count() < 7) {
-                // $usuario->documentos[$i] = "Não enviado";
-                $usuario->status = "Incompleto";
-                // $i++;
-            }
-            if ($usuario->documentos->where('user_id', $usuario->id)->count() > 6) {
-                // foreach ($usuario->documentos as $documento) {
-                //     $documento = "Enviado";
-                //     $i++;
-                // }
-                $usuario->status = "Completo";
-            }
-        }
-        return $usuarios;
+        return Excel::download(new UsersExport, 'Usuários.xlsx');
     }
 
     /**

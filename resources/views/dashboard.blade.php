@@ -1,20 +1,3 @@
-{{-- <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    Você está logado!
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout> --}}
 @extends('layout')
 @section('secao')
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-prm">
@@ -45,7 +28,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                        this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -64,10 +47,15 @@
                 {{ session('success') }}
             </div>
         @endif
-        <a href="dashboard" class="btn btn-prm mb-1">Ver Todos</a>
-        <a href="completos" class="btn btn-prm mb-1">Ver Completos</a>
-        <a href="incompletos" class="btn btn-prm mb-1">Ver Incompletos</a>
+        <a href="dashboard" class="btn btn-prm mb-1 col-xl-1 col-xs-11">Ver Todos</a>
+        <a href="completos" class="btn btn-prm mb-1 col-xl-1 col-xs-11">Ver Completos</a>
+        <a href="incompletos" class="btn btn-prm mb-1 col-xl-1 col-xs-11">Ver Incompletos</a>
     </div>
+    @if ($usuarios)
+    <div class="col-12 text-center mb-2">
+        <a class="btn btn-prm mb-1 col-xl-1 col-xs-11" href="{{ route('export') }}">Exportar dados</a>
+    </div>
+    @endif
     <div class="col-xl-11 mx-auto">
         @if (!$usuarios)
             @if ($rota == 'completos' || $rota == 'incompletos')
@@ -218,7 +206,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                {{-- @if ($usuario->documentos->count() > 0) --}}
                                 <div class="col-xs-6 col-lg-6 col-sm-12 col-xs-12">
                                     <p class="text-center p-2 bg-light">Documentos</p>
                                     @if ($usuario->informacoes)
@@ -328,201 +315,9 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            {{-- @if ($documento->tipo_doc == 1)
-                                                <a data-bs-toggle="modal" data-bs-target="#Doc_Ident_Frente_Modal">Documento de
-                                                    Identificação Frente</a>
-                                                <!-- Modal Identidade Frente -->
-                                                <div class="modal fade" id="Doc_Ident_Frente_Modal" tabindex="-1"
-                                                    aria-labelledby="FrenteModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="termosUsoLabel">
-                                                                    {{ $documento->nome }}</h5>
-                                                                <button type="button" class="btn-close mr-auto"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body mx-auto">
-                                                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                                                    class="img-fluid mx-auto" alt="...">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            @endif
-                                            @if ($documento->tipo_doc == 2)
-                                                <a data-bs-toggle="modal" data-bs-target="#Doc_Ident_Verso_Modal">Documento de
-                                                    Identificação Verso</a>
-                                                <!-- Modal Identidade Verso -->
-                                                <div class="modal fade" id="Doc_Ident_Verso_Modal" tabindex="-1"
-                                                    aria-labelledby="VersoModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="termosUsoLabel">
-                                                                    {{ $documento->nome }}</h5>
-                                                                <button type="button" class="btn-close mr-auto"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body mx-auto">
-                                                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                                                    class="img-fluid mx-auto" alt="...">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            @endif
-                                            @if ($documento->tipo_doc == 3)
-                                                <a data-bs-toggle="modal" data-bs-target="#CPF_Modal">CPF</a>
-                                                <!-- Modal CPF -->
-                                                <div class="modal fade" id="CPF_Modal" tabindex="-1"
-                                                    aria-labelledby="VersoModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="termosUsoLabel">
-                                                                    {{ $documento->nome }}</h5>
-                                                                <button type="button" class="btn-close mr-auto"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body mx-auto">
-                                                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                                                    class="img-fluid mx-auto" alt="...">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            @endif
-                                            @if ($documento->tipo_doc == 4)
-                                                <a data-bs-toggle="modal" data-bs-target="#Comprovante_Endereco_Modal">Comprovante
-                                                    de Endereço</a>
-                                                <!-- Modal Comprovante de Endereço -->
-                                                <div class="modal fade" id="Comprovante_Endereco_Modal" tabindex="-1"
-                                                    aria-labelledby="VersoModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="termosUsoLabel">
-                                                                    {{ $documento->nome }}</h5>
-                                                                <button type="button" class="btn-close mr-auto"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body mx-auto">
-                                                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                                                    class="img-fluid mx-auto" alt="...">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            @endif
-                                            @if ($documento->tipo_doc == 5)
-                                                <a data-bs-toggle="modal"
-                                                    data-bs-target="#Comprovante_Titularidade_Jazigo_Modal">Comprovante de
-                                                    Titularidade de Jazigo</a>
-                                                <!-- Modal Comprovante de Titularidade de Jazigo -->
-                                                <div class="modal fade" id="Comprovante_Titularidade_Jazigo_Modal" tabindex="-1"
-                                                    aria-labelledby="VersoModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="termosUsoLabel">
-                                                                    {{ $documento->nome }}</h5>
-                                                                <button type="button" class="btn-close mr-auto"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body mx-auto">
-                                                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                                                    class="img-fluid mx-auto" alt="...">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            @endif
-                                            @if ($documento->tipo_doc == 6)
-                                                <a data-bs-toggle="modal" data-bs-target="#Certidao_Obito_Modal">Certidão de
-                                                    Óbito</a>
-                                                <!-- Modal Certidão de Óbito -->
-                                                <div class="modal fade" id="Certidao_Obito_Modal" tabindex="-1"
-                                                    aria-labelledby="VersoModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="termosUsoLabel">
-                                                                    {{ $documento->nome }}</h5>
-                                                                <button type="button" class="btn-close mr-auto"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body mx-auto">
-                                                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                                                    class="img-fluid mx-auto" alt="...">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            @endif
-                                            @if ($documento->tipo_doc == 7)
-                                                <a data-bs-toggle="modal"
-                                                    data-bs-target="#Inventario_Formal_Partilha_Modal">Inventário ou Formal de
-                                                    Partilha</a>
-                                                <!-- Modal Inventário ou Formal de Partilha -->
-                                                <div class="modal fade" id="Inventario_Formal_Partilha_Modal" tabindex="-1"
-                                                    aria-labelledby="VersoModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="termosUsoLabel">
-                                                                    {{ $documento->nome }}</h5>
-                                                                <button type="button" class="btn-close mr-auto"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body mx-auto">
-                                                                <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                                                    class="img-fluid mx-auto" alt="...">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            @endif --}}
                                         @endforeach
                                     </div>
                                 </div>
-                                {{-- @endif --}}
-
                             </div>
                         </div>
                     </div>
