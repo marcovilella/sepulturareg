@@ -13,12 +13,13 @@ use Auth;
 
 class DocumentosController extends Controller
 {
+    // Função para exibir apenas os usuários completos
     public function completos()
     {
         $rota = Route::getCurrentRoute()->getName();
 
         $usuarios = User::all()->where('tipo', 'U');
-        
+
         $completos = null;
 
         $i = 0;
@@ -27,15 +28,23 @@ class DocumentosController extends Controller
 
             $usuario->documentos->where('user_id', $usuario->id);
 
-            if ($usuario->documentos->count() == 7) {
-                $completos[$i] = $usuario;
-                $i++;
+            $informacao = Informacao::where('user_id', $usuario->id);
+
+            if ($informacao->exists()) {
+
+                $usuario->informacoes->where('user_id', $usuario->id);
+
+                if ($usuario->documentos->count() == 7 && $usuario->informacoes->nome_permissionario && $usuario->informacoes->permissionario_vivo && $usuario->informacoes->manutencao_permissao_jazigo) {
+                    $completos[$i] = $usuario;
+                    $i++;
+                }
             }
         }
 
         return view('dashboard', ['usuarios' => $completos, 'rota' => $rota]);
     }
 
+    // Função para exibir apenas os usuários incompletos
     public function incompletos()
     {
         $rota = Route::getCurrentRoute()->getName();
@@ -47,8 +56,13 @@ class DocumentosController extends Controller
         $i = 0;
 
         foreach ($usuarios as $usuario) {
+
             $usuario->documentos->where('user_id', $usuario->id);
-            if ($usuario->documentos->count() < 7) {
+
+            $informacao = Informacao::where('user_id', $usuario->id);
+
+            // Se não tiver 7 documentos ou não tiver nenhuma informação cadastrada
+            if ($usuario->documentos->count() < 7 || !$informacao->exists()) {
 
                 $incompletos[$i] = $usuario;
                 $i++;
@@ -69,7 +83,14 @@ class DocumentosController extends Controller
         $usuarios = User::all()->where('tipo', 'U');
 
         foreach ($usuarios as $usuario) {
+
             $usuario->documentos->where('user_id', $usuario->id);
+
+            $informacao = Informacao::where('user_id', $usuario->id);
+
+            if ($informacao->exists()) {
+                $usuario->informacoes->where('user_id', $usuario->id);
+            }
         }
         // return $usuarios;
 

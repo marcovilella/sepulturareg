@@ -45,7 +45,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                        this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                        this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -91,11 +91,16 @@
                                         <strong>CPF</strong>: {{ $usuario->CPF }}
                                     </div>
                                     <div class="col-xl-4 col-sm-6 col-xs-6">
-                                        @if ($usuario->documentos->count() < 7)
-                                            <strong>Status</strong>: Incompleto
+                                        @if ($usuario->informacoes)
+                                            @if ($usuario->documentos->count() < 7 || !$usuario->informacoes->nome_permissionario || !$usuario->informacoes->permissionario_vivo || !$usuario->informacoes->manutencao_permissao_jazigo)
+                                                <strong>Status</strong>: Incompleto
+                                            @else
+                                                <strong>Status</strong>: Completo
+                                            @endif
                                         @else
-                                            <strong>Status</strong>: Completo
+                                            <strong>Status</strong>: Incompleto
                                         @endif
+
 
                                     </div>
                                 </div>
@@ -213,9 +218,89 @@
                                         </li>
                                     </ul>
                                 </div>
-                                @if ($usuario->documentos->count() > 0)
-                                    <div class="col-xs-6 col-lg-6 col-sm-12 col-xs-12 text-center">
-                                        <p class="text-center p-2 bg-light">Documentos</p>
+                                {{-- @if ($usuario->documentos->count() > 0) --}}
+                                <div class="col-xs-6 col-lg-6 col-sm-12 col-xs-12">
+                                    <p class="text-center p-2 bg-light">Documentos</p>
+                                    @if ($usuario->informacoes)
+                                        <ul>
+                                            <li>
+                                                <strong>Cemitério</strong>:
+                                                @if ($usuario->informacoes->cemiterio)
+                                                    {{ $usuario->informacoes->cemiterio }}
+                                                @else
+                                                    Não informado
+                                                @endif
+
+                                            </li>
+                                            <li>
+                                                <strong>Quadra</strong>:
+                                                @if ($usuario->informacoes->quadra)
+                                                    {{ $usuario->informacoes->quadra }}
+                                                @else
+                                                    Não informada
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <strong>Jazigo</strong>:
+                                                @if ($usuario->informacoes->jazigo)
+                                                    {{ $usuario->informacoes->jazigo }}
+                                                @else
+                                                    Não informado
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <strong>Nome do Permissionário</strong>:
+                                                @if ($usuario->informacoes->nome_permissionario)
+                                                    {{ $usuario->informacoes->nome_permissionario }}
+                                                @else
+                                                    Não informado
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <strong>O Permissionário é Vivo?</strong>:
+                                                @if ($usuario->informacoes->permissionario_vivo)
+                                                    {{ $usuario->informacoes->permissionario_vivo }}
+                                                @else
+                                                    Não informado
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <strong>Tem interesse na Manutenção da Permissão do Jazigo?</strong>:
+                                                @if ($usuario->informacoes->manutencao_permissao_jazigo)
+                                                    {{ $usuario->informacoes->manutencao_permissao_jazigo }}
+                                                @else
+                                                    <ul>
+                                                        <li>
+                                                            Não informado
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                        </ul>
+                                    @else
+                                        <ul>
+                                            <li>
+                                                <strong>Cemitério</strong>: Não informado
+                                            </li>
+                                            <li>
+                                                <strong>Quadra</strong>: Não informada
+                                            </li>
+                                            <li>
+                                                <strong>Jazigo</strong>: Não informado
+                                            </li>
+                                            <li>
+                                                <strong>Nome do Permissionário</strong>: Não informado
+                                            </li>
+                                            <li>
+                                                <strong>O Permissionário é Vivo?</strong>: Não informado
+                                            </li>
+                                            <li>
+                                                <strong>Tem interesse na Manutenção da Permissão do Jazigo?</strong>: Não
+                                                informado
+                                            </li>
+                                        </ul>
+                                    @endif
+                                    <div class="text-center">
                                         @foreach ($usuario->documentos->sortBy('tipo_doc') as $documento)
                                             <button class="btn btn-prm btn-dashboard mb-1" data-bs-toggle="modal"
                                                 data-bs-target="#documento{{ $documento->id }}_Modal">Ver
@@ -435,7 +520,8 @@
                                             @endif --}}
                                         @endforeach
                                     </div>
-                                @endif
+                                </div>
+                                {{-- @endif --}}
 
                             </div>
                         </div>
