@@ -463,6 +463,7 @@ class DocumentosController extends Controller
 
             return redirect('documentos');
         }
+        return redirect('documentos')->with("error", "para enviar documentos você deve adicionar pelo menos uma imagem");
     }
 
     // Função para adicionar informações

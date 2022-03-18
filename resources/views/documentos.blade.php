@@ -47,6 +47,11 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if (session('error'))
+            <div class="alert alert-danger text-center mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="col-xl-5 mx-auto">
             <h5 class="text-center"><strong>Documentos</strong></h5>
             @if ($documentos)
