@@ -14,8 +14,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="text-white nav-link me-5 dropdown-toggle" href="#" name="nome_usuario" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="text-white nav-link me-5 dropdown-toggle" href="#" name="nome_usuario" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -28,7 +28,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                                    this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -40,160 +40,16 @@
         </div>
     </nav>
 
-    {{-- Div para visualizar e ou remover imagens cadastradas --}}
-    <div class="col-12 mt-2">
-        @if (session('success'))
-            <div class="alert alert-success text-center mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger text-center mb-4">
-                {{ session('error') }}
-            </div>
-        @endif
-        <div class="col-xl-5 mx-auto">
-            <h5 class="text-center"><strong>Documentos</strong></h5>
-            @if ($documentos)
-                @foreach ($documentos->sortBy('tipo_doc') as $documento)
-                    <div class="text-center">
-                        <a class="btn" data-bs-toggle="modal"
-                            data-bs-target="#documento{{ $documento->id }}_Modal">
-                            {{ $documento->nome }} <br>
-                            <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                alt="...">
-                        </a>
-                        <br>
-                        <a class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#delete{{ $documento->id }}_Modal">Excluir Documento</a>
-                    </div>
-
-                    <!-- Modal Imagem -->
-                    <div class="modal fade" id="documento{{ $documento->id }}_Modal" tabindex="-1"
-                        aria-labelledby="FrenteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="termosUsoLabel">
-                                        {{ $documento->nome }}</h5>
-                                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body mx-auto">
-                                    <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                        class="img-fluid mx-auto" alt="...">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal Delete -->
-                    <div class="modal fade" id="delete{{ $documento->id }}_Modal" tabindex="-1"
-                        aria-labelledby="FrenteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="termosUsoLabel">
-                                        Excluir {{ $documento->nome }}</h5>
-                                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body mx-auto">
-                                    Tem certeza que deseja excluir: {{ $documento->nome }}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                    <form action="/documento-delete/{{ $documento->id }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Excluir Documento</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
-        </div>
-    </div>
-
-    {{-- Form para adicionar os documentos --}}
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="col-12 mt-2">
-            <div class="col-xl-5 p-1 mx-auto">
-                @if (!$Doc_Ident_Frente)
-                    <div class="mb-3">
-                        <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente <a
-                                class="text-danger"><b>Pendente</b></a></label>
-                        <input class="form-control" type="file" name="Doc_Ident_Frente" id="Doc_Ident_Frente">
-                    </div>
-                @endif
-                @if (!$Doc_Ident_Verso)
-                    <div class="mb-3">
-                        <label for="Doc_Ident_Verso" class="form-label">Documento de Identificação Verso <a
-                                class="text-danger"><b>Pendente</b></a></label>
-                        <input class="form-control" type="file" name="Doc_Ident_Verso" id="Doc_Ident_Verso">
-                    </div>
-                @endif
-                {{-- </div> --}}
-                @if (!$cpf)
-                    <div class="mb-3">
-                        <label for="cpf" class="form-label">CPF <a class="text-danger"><b>Pendente</b></a></label>
-                        <input class="form-control" type="file" name="cpf" id="cpf">
-                    </div>
-                @endif
-                @if (!$comprovante_endereco)
-                    <div class="mb-3">
-                        <label for="comprovante_endereco" class="form-label">Comprovante de Endereço <a
-                                class="text-danger"><b>Pendente</b></a></label>
-                        <input class="form-control" type="file" name="comprovante_endereco" id="comprovante_endereco">
-                    </div>
-                @endif
-                @if (!$comprovante_titularidade_jazigo)
-                    <div class="mb-3">
-                        <label for="comprovante_titularidade_jazigo" class="form-label">Comprovante de Titularidade de
-                            Jazigo <a class="text-danger"><b>Pendente</b></a></label>
-                        <input class="form-control" type="file" name="comprovante_titularidade_jazigo"
-                            id="comprovante_titularidade_jazigo">
-                    </div>
-                @endif
-                @if (!$certidao_obito)
-                    <div class="mb-3">
-                        <label for="certidao_obito" class="form-label">Certidão de Óbito do Último Sepultado <a
-                                class="text-danger"><b>Pendente</b></a></label>
-                        <input class="form-control" type="file" name="certidao_obito" id="certidao_obito">
-                    </div>
-                @endif
-                @if (!$inventario_formal_partilha)
-                    <div class="mb-3">
-                        <label for="inventario_formal_partilha" class="form-label">Inventário ou Formal de Partilha,
-                            caso o Titular do jazigo
-                            seja falecido, de acordo com o art.13 da Lei 1.871 de 21 de janeiro de 1.998 <a
-                                class="text-danger"><b>Pendente</b></a></label>
-                        <input class="form-control" type="file" name="inventario_formal_partilha"
-                            id="inventario_formal_partilha">
-                    </div>
-                @endif
-                @if (!$Doc_Ident_Frente || !$Doc_Ident_Verso || !$cpf || !$comprovante_endereco || !$comprovante_titularidade_jazigo || !$certidao_obito || !$inventario_formal_partilha)
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-prm">Enviar Documento</button>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </form>
-
     {{-- Se o usuário não tem nenhuma informação cadastrada aparece o form para cadastrar informações --}}
-    {{-- @if (!$informacao)
+    @if (!$informacao)
         <form action="salvar-informacoes" method="post">
             @csrf
             <div class="col-12 mt-2">
+                @if (session('success'))
+                    <div class="alert alert-success text-center mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="col-xl-5 mb-5 mx-auto">
                     <h5 class="text-center"><strong>Informações</strong></h5>
                     <div class="row">
@@ -268,11 +124,16 @@
                     </div>
                 </div>
             </div>
-        </form> --}}
+        </form>
 
         {{-- Se o usuário tiver alguma informação cadastrada aparece o form para edição --}}
-    {{-- @else
+    @else
         <div class="col-12 mt-2">
+            @if (session('success'))
+                <div class="alert alert-success text-center mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="col-xl-5 mb-5 mx-auto">
                 <h5 class="text-center"><strong>Informações</strong></h5>
                 <form action="/editar-informacoes/{{ $informacao->id }}" method="POST">
@@ -359,13 +220,5 @@
                 </form>
             </div>
         </div>
-    @endif --}}
+    @endif
 @endsection
-
-{{-- <script>
-
-let value = document.querySelector('navbarDropdown');
-let target = link.getAttribute('value');
-window.onload;
-console.log(target);
-</script> --}}

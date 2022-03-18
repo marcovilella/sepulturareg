@@ -15,6 +15,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentosController extends Controller
 {
+    public function inicio()
+    {
+        $idUsuario = Auth::user()->id;
+
+        $documentos = Documento::where('user_id', $idUsuario)->count();
+        $informacoes = Informacao::where('user_id', $idUsuario)->count();
+
+        return view('inicio', ['documentos' => $documentos, 'informacoes' => $informacoes]);
+
+    }
+
     // Função para exibir apenas os usuários completos
     public function completos()
     {
@@ -216,6 +227,27 @@ class DocumentosController extends Controller
         );
     }
 
+    public function createInformacoes()
+    {
+        // Pegando o id do usuário logado
+        $idUsuario = Auth::user()->id;
+
+        if (Informacao::where('user_id', $idUsuario)->exists()) {
+            $informacao = Informacao::where('user_id', $idUsuario)->get();
+            $informacao = $informacao[0];
+            // return $informacao;
+        } else {
+            $informacao = null;
+        }
+
+        return view(
+            'informacoes',
+            [
+                'informacao' => $informacao,
+            ]
+            );
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -265,7 +297,7 @@ class DocumentosController extends Controller
                 !$request->hasFile('certidao_obito') &&
                 !$request->hasFile('inventario_formal_partilha')
             ) {
-                return redirect('documentos');
+                return redirect('inicio')->with("success", "Documentos adicionados com sucesso");
             }
         }
 
@@ -301,7 +333,7 @@ class DocumentosController extends Controller
                 !$request->hasFile('certidao_obito') &&
                 !$request->hasFile('inventario_formal_partilha')
             ) {
-                return redirect('documentos');
+                return redirect('inicio')->with("success", "Documentos adicionados com sucesso");
             }
         }
 
@@ -336,7 +368,7 @@ class DocumentosController extends Controller
                 !$request->hasFile('certidao_obito') &&
                 !$request->hasFile('inventario_formal_partilha')
             ) {
-                return redirect('documentos');
+                return redirect('inicio')->with("success", "Documentos adicionados com sucesso");
             }
         }
 
@@ -370,7 +402,7 @@ class DocumentosController extends Controller
                 !$request->hasFile('certidao_obito') &&
                 !$request->hasFile('inventario_formal_partilha')
             ) {
-                return redirect('documentos');
+                return redirect('inicio')->with("success", "Documentos adicionados com sucesso");
             }
         }
         if ($request->hasFile('comprovante_titularidade_jazigo') && $request->file('comprovante_titularidade_jazigo')->isValid()) {
@@ -402,7 +434,7 @@ class DocumentosController extends Controller
                 !$request->hasFile('certidao_obito') &&
                 !$request->hasFile('inventario_formal_partilha')
             ) {
-                return redirect('documentos');
+                return redirect('inicio')->with("success", "Documentos adicionados com sucesso");
             }
         }
         if ($request->hasFile('certidao_obito') && $request->file('certidao_obito')->isValid()) {
@@ -433,7 +465,7 @@ class DocumentosController extends Controller
             if (
                 !$request->hasFile('inventario_formal_partilha')
             ) {
-                return redirect('documentos');
+                return redirect('inicio')->with("success", "Documentos adicionados com sucesso");
             }
         }
         if ($request->hasFile('inventario_formal_partilha') && $request->file('inventario_formal_partilha')->isValid()) {
@@ -461,9 +493,9 @@ class DocumentosController extends Controller
                 'nome' => "Inventário ou Formal de Partilha",
             ]);
 
-            return redirect('documentos');
+            return redirect('inicio')->with("success", "Documentos adicionados com sucesso");
         }
-        return redirect('documentos')->with("error", "para enviar documentos você deve adicionar pelo menos uma imagem");
+        return redirect('documentos')->with("error", "Para enviar documentos você deve adicionar pelo menos uma imagem");
     }
 
     // Função para adicionar informações
@@ -482,7 +514,7 @@ class DocumentosController extends Controller
             'user_id' => $user_id,
         ]);
 
-        return redirect('documentos');
+        return redirect('inicio')->with("success", "Informações salvas com sucesso");
     }
 
     // Função para editar informações
@@ -492,7 +524,7 @@ class DocumentosController extends Controller
 
         $informacao->update($request->all());
 
-        return redirect('documentos')->with("success", "Informações editadas com sucesso");
+        return redirect('inicio')->with("success", "Informações editadas com sucesso");
     }
 
     /**

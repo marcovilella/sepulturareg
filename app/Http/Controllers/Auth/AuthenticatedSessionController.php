@@ -71,8 +71,6 @@ class AuthenticatedSessionController extends Controller
             } else {
                 return redirect()->intended(RouteServiceProvider::DASHBOARD)->with("success", "Senha alterada com sucesso");;
             }
-
-            return redirect()->back()->with("success", "Senha alterada com sucesso");
         }
 
         // Quando a nova senha for igual a anterior vai dar este aviso

@@ -18,10 +18,12 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/inicio', [DocumentosController::class,'inicio'])->middleware(['auth'])->name('inicio');
 Route::get('/documentos', [DocumentosController::class,'create'])->middleware(['auth'])->name('documentos');
-Route::get('/incompletos', [DocumentosController::class,'incompletos'])->middleware(['auth'])->name('incompletos');
-Route::get('/completos', [DocumentosController::class,'completos'])->middleware(['auth'])->name('completos');
+Route::get('/informacoes', [DocumentosController::class,'createInformacoes'])->middleware(['auth'])->name('informacoes');
 Route::get('/dashboard', [DocumentosController::class,'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/completos', [DocumentosController::class,'completos'])->middleware(['auth'])->name('completos');
+Route::get('/incompletos', [DocumentosController::class,'incompletos'])->middleware(['auth'])->name('incompletos');
 
 require __DIR__.'/auth.php';
 

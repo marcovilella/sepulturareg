@@ -2,7 +2,7 @@
 @section('secao')
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-prm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/dashboard">
                 <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/Marca-PMC-cor.png"
                     style="height: 40px; width: 90px; overflow-wrap: break-word;"
                     class="bg-light d-inline-block h-10 img-fluid align-center" class="img-thumbnail" alt="...">
