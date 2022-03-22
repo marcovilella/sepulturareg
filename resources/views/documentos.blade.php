@@ -1,6 +1,6 @@
 @extends('layout')
 @section('secao')
-    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-prm">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light col-12 bg-prm">
         <div class="container-fluid">
             <a class="navbar-brand" href="/inicio">
                 <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/Marca-PMC-cor.png"
@@ -14,8 +14,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="text-white nav-link me-5 dropdown-toggle" href="#" name="nome_usuario" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="text-white nav-link me-5 dropdown-toggle" href="#" name="nome_usuario" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -28,7 +28,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                                    this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -40,93 +40,26 @@
         </div>
     </nav>
 
-    {{-- Div para visualizar e ou remover imagens cadastradas --}}
     <div class="col-12 mt-2">
+        <h5 class="text-center"><strong>Documentos</strong></h5>
+
         @if (session('success'))
-            <div class="alert alert-success text-center mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger text-center mb-4">
-                {{ session('error') }}
-            </div>
-        @endif
-        <div class="col-xl-5 mx-auto">
-            <h5 class="text-center"><strong>Documentos</strong></h5>
-            @if ($documentos)
-                @foreach ($documentos->sortBy('tipo_doc') as $documento)
-                    <div class="text-center">
-                        <a class="btn" data-bs-toggle="modal"
-                            data-bs-target="#documento{{ $documento->id }}_Modal">
-                            {{ $documento->nome }} <br>
-                            <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                style="height: 67px; width: 67px; background-color:aliceblue;" class="img-thumbnail"
-                                alt="...">
-                        </a>
-                        <br>
-                        <a class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#delete{{ $documento->id }}_Modal">Excluir Documento</a>
-                    </div>
-
-                    <!-- Modal Imagem -->
-                    <div class="modal fade" id="documento{{ $documento->id }}_Modal" tabindex="-1"
-                        aria-labelledby="FrenteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="termosUsoLabel">
-                                        {{ $documento->nome }}</h5>
-                                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body mx-auto">
-                                    <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
-                                        class="img-fluid mx-auto" alt="...">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal Delete -->
-                    <div class="modal fade" id="delete{{ $documento->id }}_Modal" tabindex="-1"
-                        aria-labelledby="FrenteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="termosUsoLabel">
-                                        Excluir {{ $documento->nome }}</h5>
-                                    <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body mx-auto">
-                                    Tem certeza que deseja excluir: {{ $documento->nome }}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                    <form action="/documento-delete/{{ $documento->id }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Excluir Documento</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+        <div class="alert alert-success text-center mb-4">
+            {{ session('success') }}
         </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger text-center mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
     </div>
 
     {{-- Form para adicionar os documentos --}}
     <form action="/upload" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-12 mt-2">
-            <div class="col-xl-5 p-1 mx-auto">
+            <div class="col-xl-5 mx-auto">
                 @if (!$Doc_Ident_Frente)
                     <div class="mb-3">
                         <label for="Doc_Ident_Frente" class="form-label">Documento de Identificação Frente <a
@@ -188,6 +121,84 @@
             </div>
         </div>
     </form>
+
+        {{-- Div para visualizar e ou remover imagens cadastradas --}}
+        <div class="col-12 mt-2">
+            <div class="col-xl-5 col-lg-10 col-12 mx-auto">
+                @if ($documentos)
+                    @foreach ($documentos->sortBy('tipo_doc') as $documento)
+                        <div class="row mb-2">
+                            <div class="col-xl-10 col-lg-10 col-sm-10 col-9">
+                                <label for="Doc_Ident_Frente" class="form-label">{{ $documento->nome }} <a
+                                        class="text-success"><b>Enviado</b></a></label>
+                                <input class="form-control" type="file" disabled>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-sm-2 col-1 p-0 text-center">
+                                <a class="btn p-0" data-bs-toggle="modal"
+                                    data-bs-target="#documento{{ $documento->id }}_Modal">
+                                    <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
+                                        style="height: 67px; width: 67px; min-height: 67px; min-width: 67px; background-color:aliceblue;" class="img-thumbnail"
+                                        alt="...">
+                                </a>
+                                <br>
+                                <a class="btn btn-danger mx-auto" data-bs-toggle="modal"
+                                    data-bs-target="#delete{{ $documento->id }}_Modal">Excluir</a>
+                            </div>
+                            <hr class="mt-2">
+                        </div>
+    
+                        <!-- Modal Imagem -->
+                        <div class="modal fade" id="documento{{ $documento->id }}_Modal" tabindex="-1"
+                            aria-labelledby="FrenteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="termosUsoLabel">
+                                            {{ $documento->nome }}</h5>
+                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body mx-auto">
+                                        <img src="{{ config('app.url', 'http://localhost') }}/{{ $documento->imagem }}"
+                                            class="img-fluid mx-auto" alt="...">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Modal Delete -->
+                        <div class="modal fade" id="delete{{ $documento->id }}_Modal" tabindex="-1"
+                            aria-labelledby="FrenteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="termosUsoLabel">
+                                            Excluir {{ $documento->nome }}</h5>
+                                        <button type="button" class="btn-close mr-auto" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body mx-auto">
+                                        Tem certeza que deseja excluir: {{ $documento->nome }}?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <form action="/documento-delete/{{ $documento->id }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Excluir Documento</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
 
     {{-- Se o usuário não tem nenhuma informação cadastrada aparece o form para cadastrar informações --}}
     {{-- @if (!$informacao)
@@ -270,7 +281,7 @@
             </div>
         </form> --}}
 
-        {{-- Se o usuário tiver alguma informação cadastrada aparece o form para edição --}}
+    {{-- Se o usuário tiver alguma informação cadastrada aparece o form para edição --}}
     {{-- @else
         <div class="col-12 mt-2">
             <div class="col-xl-5 mb-5 mx-auto">

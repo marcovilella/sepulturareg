@@ -1,6 +1,6 @@
 @extends('layout')
 @section('secao')
-    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-prm">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light col-12 bg-prm">
         <div class="container-fluid">
             <a class="navbar-brand" href="/inicio">
                 <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/Marca-PMC-cor.png"
@@ -28,7 +28,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                    this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                                        this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -50,25 +50,34 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <div class="col-xl-5 mb-5 mx-auto">
+                <div class="col-xl-5 col-12 mb-5 mx-auto">
                     <h5 class="text-center"><strong>Informações</strong></h5>
                     <div class="row">
-                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <label for="cemiterio">Cemitério</label>
-                            <input type="text" class="form-control" value="{{ old('cemiterio') }}" name="cemiterio"
-                                id="cemiterio">
+
+                            <select class="form-select" name="cemiterio" id="cemiterio">
+                                <option value="">Selecione</option>
+                                <option {{ old('cemiterio') == 'Cemitério São Pedro' ? 'selected' : '' }} value="Cemitério São Pedro">Cemitério São Pedro</option>
+                                <option {{ old('cemiterio') == 'Cemitério Nossa Senhora da Glória' ? 'selected' : '' }} value="Cemitério Nossa Senhora da Glória">Cemitério Nossa Senhora da Glória</option>
+                                <option {{ old('cemiterio') == 'Cemitério Bom Jesus' ? 'selected' : '' }} value="Cemitério Bom Jesus">Cemitério Bom Jesus</option>
+                                <option {{ old('cemiterio') == 'Não Declarado' ? 'selected' : '' }} value="Não Declarado">Não Declarado</option>
+                            </select>
+
+                            {{-- <input type="text" class="form-control" value="{{ old('cemiterio') }}" name="cemiterio"
+                                id="cemiterio"> --}}
                         </div>
-                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <label for="quadra">Quadra</label>
                             <input type="text" class="form-control" value="{{ old('quadra') }}" name="quadra"
                                 id="quadra">
                         </div>
-                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <label for="jazigo">Jazigo</label>
                             <input type="text" class="form-control" value="{{ old('jazigo') }}" name="jazigo"
                                 id="jazigo">
                         </div>
-                        <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 p-1">
+                        <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <label for="nome_permissionario">Nome do Permissionário *</label>
                             <input type="text" class="form-control  @error('nome_permissionario') is-invalid @enderror"
                                 value="{{ old('nome_permissionario') }}" name="nome_permissionario"
@@ -77,7 +86,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3 col-12 p-1">
+                        <div class="mb-3 col-12">
                             <label for="permissionario_vivo">O Permissionário é vivo? *</label>
                             <div class="form-check">
                                 <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror"
@@ -97,7 +106,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3 col-12 p-1">
+                        <div class="mb-3 col-12">
                             <label for="manutencao_permissao_jazigo">Tem Interesse na Manutenção da Permissão do Jazigo?
                                 *</label>
                             <div class="form-check">
@@ -134,28 +143,33 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <div class="col-xl-5 mb-5 mx-auto">
+            <div class="col-xl-5 col-12 mb-5 mx-auto">
                 <h5 class="text-center"><strong>Informações</strong></h5>
                 <form action="/editar-informacoes/{{ $informacao->id }}" method="POST">
                     @method("PUT")
                     @csrf
-                    <div class="row p-1">
-                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                    <div class="row">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <label for="cemiterio">Cemitério</label>
-                            <input type="text" class="form-control" value="{{ $informacao->cemiterio }}"
-                                name="cemiterio" id="cemiterio">
+                                <select class="form-select" name="cemiterio" id="cemiterio">
+                                    <option value="">Selecione</option>
+                                    <option {{ $informacao->cemiterio == 'Cemitério São Pedro' ? 'selected' : '' }} value="Cemitério São Pedro">Cemitério São Pedro</option>
+                                    <option {{ $informacao->cemiterio == 'Cemitério Nossa Senhora da Glória' ? 'selected' : '' }} value="Cemitério Nossa Senhora da Glória">Cemitério Nossa Senhora da Glória</option>
+                                    <option {{ $informacao->cemiterio == 'Cemitério Bom Jesus' ? 'selected' : '' }} value="Cemitério Bom Jesus">Cemitério Bom Jesus</option>
+                                    <option {{ $informacao->cemiterio == 'Não Declarado' ? 'selected' : '' }} value="Não Declarado">Não Declarado</option>
+                                </select>
                         </div>
-                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <label for="quadra">Quadra</label>
                             <input type="text" class="form-control" value="{{ $informacao->quadra }}" name="quadra"
                                 id="quadra">
                         </div>
-                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-1">
+                        <div class="mb-3 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <label for="jazigo">Jazigo</label>
                             <input type="text" class="form-control" value="{{ $informacao->jazigo }}" name="jazigo"
                                 id="jazigo">
                         </div>
-                        <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 p-1">
+                        <div class="mb-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <label for="nome_permissionario">Nome do Permissionário *</label>
                             <input type="text" class="form-control  @error('nome_permissionario') is-invalid @enderror"
                                 value="{{ $informacao->nome_permissionario }}" name="nome_permissionario"
@@ -164,7 +178,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3 col-12 p-1">
+                        <div class="mb-3 col-12">
                             <label for="permissionario_vivo">O Permissionário é vivo? *</label>
                             <div class="form-check">
                                 <input class="form-check-input @error('permissionario_vivo') is-invalid @enderror"
@@ -188,7 +202,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3 col-12 p-1">
+                        <div class="mb-3 col-12">
                             <label for="manutencao_permissao_jazigo">Tem Interesse na Manutenção da Permissão do Jazigo?
                                 *</label>
                             <div class="form-check">

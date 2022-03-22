@@ -20,7 +20,7 @@
                     class="rounded-md shadow-sm letra-maiuscula border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full @error('name') is-invalid @enderror"
                     name="name" id="name"> --}}
 
-                <x-label for="name" :value="__('Nome Completo *')" />
+                <x-label for="name" :value="__('Nome Completo do Declarante *')" />
                 <x-input id="name" class="block mt-1 w-full @error('name') is-invalid @enderror" type="text" name="name"
                     :value="old('name')" autofocus />
                 @error('name')

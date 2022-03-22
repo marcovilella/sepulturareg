@@ -1,6 +1,6 @@
 @extends('layout')
 @section('secao')
-    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-prm">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light col-12 bg-prm">
         <div class="container-fluid">
             <a class="navbar-brand" href="/dashboard">
                 <img src="{{ config('app.url', 'http://localhost') }}/assets/imgs/Marca-PMC-cor.png"
@@ -28,7 +28,7 @@
 
                                     <a class="dropdown-item" :href="route('logout')"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                    this.closest('form').submit();">
                                         {{ __('Sair') }}
                                     </a>
                                 </form>
@@ -47,14 +47,15 @@
                 {{ session('success') }}
             </div>
         @endif
-        <a href="dashboard" class="btn btn-prm mb-1 col-xl-1 col-xs-11">Ver Todos</a>
-        <a href="completos" class="btn btn-prm mb-1 col-xl-1 col-xs-11">Ver Completos</a>
-        <a href="incompletos" class="btn btn-prm mb-1 col-xl-1 col-xs-11">Ver Incompletos</a>
+        <a href="dashboard" class="btn btn-prm mb-1 col-xl-2 col-lg-3 col-md-3 col-sm-3 col-xs-11">Ver Todos</a>
+        <a href="completos" class="btn btn-prm mb-1 col-xl-2 col-lg-3 col-md-3 col-sm-3 col-xs-11">Ver Completos</a>
+        <a href="incompletos" class="btn btn-prm mb-1 col-xl-2 col-lg-3 col-md-3 col-sm-3 col-xs-11">Ver Incompletos</a>
     </div>
     @if ($usuarios)
-    <div class="col-12 text-center mb-2">
-        <a class="btn btn-prm mb-1 col-xl-1 col-xs-11" href="{{ route('export') }}">Exportar dados</a>
-    </div>
+        <div class="col-12 text-center mb-2">
+            <a class="btn btn-prm mb-1 col-xl-2 col-lg-3 col-md-3 col-sm-3 col-xs-11"
+                href="{{ route('export') }}">Exportar dados</a>
+        </div>
     @endif
     <div class="col-xl-11 mx-auto">
         @if (!$usuarios)

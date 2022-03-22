@@ -54,7 +54,7 @@
                 @endif
                 <a href="/documentos" class="btn btn-prm">Documentos</a>
 
-                <h5 class="mt-4">Adicionar ou Editar Informações</h5>
+                <h5 class="mt-4">Adicionar ou Editar Informações de Cemitério / Jazigo</h5>
                 @if ($informacoes < 1)
                 <a href="/informacoes" class="text-danger fw-bold">Você ainda não adicionou informações</a>
                 <br>
