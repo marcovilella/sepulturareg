@@ -8,7 +8,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Esqueceu sua senha? Sem problemas. Insira seu email abaixo para que seja enviado um link de recueração de senha.') }}
+            {{ __('Esqueceu sua senha? Sem problemas. Insira seu email abaixo para que seja enviado um link de recuperação de senha.') }}
         </div>
 
         <!-- Session Status -->
