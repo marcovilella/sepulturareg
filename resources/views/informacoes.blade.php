@@ -228,7 +228,7 @@
                             @enderror
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-prm">Editar Informações</button>
+                            <button class="btn btn-prm">Salvar Informações</button>
                         </div>
                     </div>
                 </form>
